@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+<html lang="ru" data-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BlockLink: виртуальные сети для приватного общения - Блог BlockChat</title>
+    <link rel="shortcut icon" href="../images/icon.png">
+    <meta name="description" content="Знакомьтесь: BlockLink — технология создания изолированных виртуальных сетей для каждого чата. Прямое P2P-соединение без настроек роутера.">
+    <meta name="keywords" content="BlockLink, виртуальная сеть, P2P, VPN, BlockChat, NAT, прямое соединение">
+    <link rel="stylesheet" href="../css/posts.css">
+</head>
+<body>
+    <div class="container">
+        <nav>
+            <div class="logo">
+                <div class="logo-icon">
+                    <img src="../images/logo-white.png" width="30px"/>
+                </div>
+                <a href="../index.html">BlockChat</a>
+            </div>
+            <div class="nav-links">
+                <a href="../index.html" class="nav-link">Главная</a>
+                <a href="../blogs.html" class="nav-link">Блог</a>
+                <a href="../download.html" class="nav-link">Скачать</a>
+                <button class="theme-toggle" id="themeToggle" aria-label="Переключить тему">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M12 16C14.2091 16 16 14.2091 16 12C16 9.79086 14.2091 8 12 8C9.79086 8 8 9.79086 8 12C8 14.2091 9.79086 16 12 16Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                        <path d="M12 2V4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                        <path d="M12 20V22" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                        <path d="M4.93 4.93L6.34 6.34" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                        <path d="M17.66 17.66L19.07 19.07" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                        <path d="M2 12H4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                        <path d="M20 12H22" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                        <path d="M6.34 17.66L4.93 19.07" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                        <path d="M19.07 4.93L17.66 6.34" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                    </svg>
+                </button>
+            </div>
+        </nav>
+    </div>
+
+    <article class="article">
+        <div class="container">
+            <header class="article-hero">
+                <h1>BlockLink: виртуальные сети для приватного общения</h1>
+                <div class="article-meta">
+                    <div class="article-meta-item">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                        <span>6 марта 2026</span>
+                    </div>
+                    <div class="article-meta-item">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                        <a href="https://bereznyak72.github.io/" target="_blank">bereznyak72</a>
+                    </div>
+                    <div class="article-meta-item">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M13 10V3L4 14h7v7l9-11h-7z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                        <span>10 мин чтения</span>
+                    </div>
+                </div>
+            </header>
+
+            <div class="article-content">
+                <figure class="article-image">
+                    <img src="../images/blocklink-post.png" alt="BlockLink - виртуальные сети для каждого чата">
+                    <figcaption>Каждый чат в BlockChat получает свою изолированную виртуальную сеть</figcaption>
+                </figure>
+
+                <div class="info-box" style="background: linear-gradient(135deg, var(--primary-dark), var(--primary)); color: white; border-left: none;">
+                    <h4 style="color: white; font-size: 1.3rem;">🚀 Анонс новой технологии</h4>
+                    <p style="color: white; font-size: 1.1rem;">Мы представляем BlockLink — технологию, которая навсегда решает проблему NAT в P2P-мессенджерах. Просто, надежно и безопасно.</p>
+                </div>
+
+                <h2>Проблема, о которой молчат</h2>
+
+                <p>В предыдущей статье мы подробно разобрали, как разные P2P-мессенджеры пытаются обойти NAT. Кто-то использует UDP hole punching, кто-то полагается на сложные onion-сети, а кто-то предлагает пользователям вручную настраивать роутер. У каждого подхода есть недостатки:</p>
+
+                <ul>
+                    <li><strong>UDP hole punching</strong> — не работает с симметричным NAT (а это 30-40% современных роутеров)</li>
+                    <li><strong>Tor/onion-маршрутизация</strong> — огромные задержки, сообщение может идти минутами</li>
+                    <li><strong>Ручной проброс портов</strong> — требует технических знаний, не все готовы лезть в настройки роутера</li>
+                    <li><strong>Центральные серверы</strong> — убивают суть P2P, создают единую точку отказа</li>
+                </ul>
+
+                <p>Мы задались вопросом: а можно ли создать решение, которое работает всегда, не требует от пользователя никаких действий и при этом сохраняет все преимущества P2P? Ответ: <strong>BlockLink</strong>.</p>
+
+                <h2>Что такое BlockLink?</h2>
+
+                <p>BlockLink — это технология создания <strong>изолированных виртуальных сетей для каждого чата</strong>. Представьте, что для каждого разговора вы и ваш собеседник оказываетесь в одной локальной сети, со своими IP-адресами, маршрутизацией и возможностью прямого соединения. При этом:</p>
+
+                <ul>
+                    <li>Вам не нужно настраивать роутер</li>
+                    <li>Не нужно разбираться в IP-адресах</li>
+                    <li>Не нужно беспокоиться о NAT — он просто перестает существовать как проблема</li>
+                </ul>
+
+                <h2>Как это работает?</h2>
+
+                <h3>Шаг 1. Подключение к серверу BlockChat ID</h3>
+                <p>При запуске BlockChat ваше приложение автоматически подключается к нашему сигнальному серверу через WebSocket. Сервер запоминает ваш публичный IP и держит соединение открытым. Это единственный централизованный элемент во всей системе.</p>
+
+                <h3>Шаг 2. Создание виртуальной сети для чата</h3>
+                <p>Когда вы создаете новый чат, сервер генерирует для него уникальную виртуальную сеть. Вам автоматически назначается виртуальный IP-адрес из диапазона 10.10.0.0/16. Например, вы становитесь 10.10.1.1.</p>
+
+                <div class="info-box">
+                    <h4>Техническая деталь</h4>
+                    <p>Каждый чат получает свой собственный /24 подсеть (256 адресов). Даже если в чате всего два человека, у них есть своя изолированная сеть, не пересекающаяся с другими чатами. Это повышает безопасность и упрощает маршрутизацию.</p>
+                </div>
+
+                <h3>Шаг 3. Присоединение к чату</h3>
+                <p>Ваш друг вводит 6-значный код чата. Сервер добавляет его в ту же виртуальную сеть и назначает следующий свободный IP (например, 10.10.1.2). Теперь вы оба "видите" друг друга как устройства в одной локальной сети.</p>
+
+                <h3>Шаг 4. Прямое P2P-соединение</h3>
+                <p>Приложение автоматически устанавливает прямое TCP-соединение между виртуальными IP. Все сообщения идут напрямую от 10.10.1.1 к 10.10.1.2, минуя наши серверы. Скорость максимальная, задержки минимальные.</p>
+
+                <h3>Шаг 5. Резервный канал (если P2P не работает)</h3>
+                <p>В редких случаях (симметричный NAT, строгие корпоративные файрволы) прямое соединение может не установиться. Тогда сервер автоматически становится ретранслятором. Важно: сообщения по-прежнему зашифрованы E2E, сервер видит только зашифрованный трафик. Мы сообщим пользователю, если сообщения будут идти не через P2P </p>
+
+                <h2>Почему это работает?</h2>
+
+                <p>Секрет BlockLink в том, что мы <strong>не пытаемся пробить NAT</strong>. Мы просто создаем среду, в которой NAT не имеет значения. Виртуальные IP-адреса назначаются сервером, а реальная маршрутизация происходит через:</p>
+
+                <ul>
+                    <li><strong>Прямое P2P</strong> — когда возможно установить соединение напрямую</li>
+                    <li><strong>Ретрансляцию</strong> — когда прямое соединение блокируется</li>
+                </ul>
+
+                <p>При этом для приложения и для пользователя разница незаметна. Вы просто отправляете сообщение на виртуальный IP собеседника, а BlockLink сам решает, как его доставить.</p>
+
+                <h2>Технические детали (для любопытных)</h2>
+
+                <h3>Виртуальные адаптеры</h3>
+                <p>BlockLink использует TUN/TAP адаптеры для создания виртуальных сетевых интерфейсов. На Windows это делается через Wintun, на Linux — через tun-драйвер, на macOS — через utun. Пользователь даже не замечает, что у него появился новый сетевой адаптер.</p>
+
+                <h3>Маршрутизация</h3>
+                <p>Для каждого чата создается отдельная таблица маршрутизации. Все пакеты, идущие на IP этого чата, направляются в виртуальный адаптер. Оттуда они попадают в P2P-туннель к собеседнику.</p>
+
+                <h3>Шифрование</h3>
+                <p>Даже если трафик идет через ретранслятор, он зашифрован поверх P2P-туннеля. Сервер не может расшифровать сообщения, только переслать зашифрованные пакеты.</p>
+
+                <h2>BlockLink vs другие решения</h2>
+
+                <table class="comparison-table">
+                    <thead>
+                        <tr>
+                            <th>Характеристика</th>
+                            <th>BlockLink</th>
+                            <th>UDP hole punching</th>
+                            <th>Tor</th>
+                            <th>Ручной проброс</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Работает с любым NAT</td>
+                            <td>✅ Да (с ретрансляцией)</td>
+                            <td>❌ Нет</td>
+                            <td>✅ Да</td>
+                            <td>✅ Да</td>
+                        </tr>
+                        <tr>
+                            <td>Не требует настроек</td>
+                            <td>✅ Да</td>
+                            <td>✅ Да</td>
+                            <td>✅ Да</td>
+                            <td>❌ Нет</td>
+                        </tr>
+                        <tr>
+                            <td>Высокая скорость</td>
+                            <td>✅ Да (P2P)</td>
+                            <td>✅ Да</td>
+                            <td>❌ Нет</td>
+                            <td>✅ Да</td>
+                        </tr>
+                        <tr>
+                            <td>Приватность</td>
+                            <td>✅ E2E шифрование</td>
+                            <td>✅ E2E шифрование</td>
+                            <td>✅ Высокая</td>
+                            <td>✅ E2E шифрование</td>
+                        </tr>
+                        <tr>
+                            <td>Простота для пользователя</td>
+                            <td>⭐⭐⭐⭐⭐</td>
+                            <td>⭐⭐⭐⭐</td>
+                            <td>⭐⭐⭐</td>
+                            <td>⭐</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <h2>Что дальше?</h2>
+
+                <p>BlockLink уже работает в тестовой версии BlockChat, и мы активно его развиваем. В ближайших планах:</p>
+
+                <h3>1. Групповые чаты</h3>
+                <p>Виртуальная сеть идеально подходит для группового общения. Представьте: вы создаете чат, и все участники получают виртуальные IP 10.10.1.1, 10.10.1.2, 10.10.1.3... Сообщения можно рассылать multicast'ом или строить mesh-сеть между всеми участниками.</p>
+
+                <h3>2. Mesh-сети без интернета</h3>
+                <p>BlockLink может работать не только через интернет, но и через Wi-Fi Direct или Bluetooth. Представьте: вы в походе, нет связи, но вы и ваш друг можете общаться через прямое соединение устройств, как в одной локальной сети.</p>
+
+                <h3>3. Интеграция с Blockchain ID</h3>
+                <p>Виртуальные IP можно привязать к Blockchain ID. Тогда адрес 10.10.1.1 будет навсегда закреплен за вашим ID в рамках этого чата, что упрощает организацию постоянных каналов связи.</p>
+
+                <h2>Заключение</h2>
+
+                <p>BlockLink — это не просто очередной способ обхода NAT. Это новый взгляд на организацию P2P-коммуникаций. Вместо того чтобы бороться с ограничениями сети, мы создаем свою виртуальную сеть, в которой этих ограничений просто нет. Просто, элегантно и эффективно.</p>
+
+                <p>Мы верим, что за такими технологиями будущее. Не нужно выбирать между простотой и приватностью — с BlockLink у вас есть и то, и другое.</p>
+
+                <div class="article-navigation">
+                    <a href="../blogs.html" class="nav-button">
+                        К списку статей
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M9 5l7 7-7 7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </article>
+
+    <div id="modal" class="modal">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h3>Временно недоступно</h3>
+          <button class="modal-close" id="modalClose">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M18 6L6 18M6 6l12 12" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </button>
+        </div>
+        <div class="modal-body">
+          <div class="modal-icon">
+            <svg width="48" height="48" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" stroke="var(--warning)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </div>
+          <p>Данная функция находится в разработке. Мы работаем над улучшением сайта и скоро добавим эту возможность.</p>
+        </div>
+        <div class="modal-footer">
+          <button class="btn btn-primary" id="modalOk">Понятно</button>
+        </div>
+      </div>
+    </div>
+
+    <footer>
+      <div class="container">
+        <div class="footer-content">
+          <div class="footer-column">
+            <h3>Продукт</h3>
+            <ul class="footer-links">
+              <li><a href="../download.html">Скачать</a></li>
+              <li><a href="../index.html#features">Особенности</a></li>
+              <li><a href="../index.html#how-it-works">Как подключиться</a></li>
+              <li><a href="../index.html#backlog">Бэклог</a></li>
+            </ul>
+          </div>
+          <div class="footer-column">
+            <h3>Поддержка</h3>
+            <ul class="footer-links">
+              <li><a href="#" class="modal-link">Сообщить об ошибке</a></li>
+              <li><a href="#" class="modal-link">Запросить функцию</a></li>
+            </ul>
+          </div>
+          <div class="footer-column">
+            <h3>Сообщество</h3>
+            <ul class="footer-links">
+              <li><a href="../blogs.html">Блог</a></li>
+              <li><a href="../download.html#version-history">Релизы</a></li>
+            </ul>
+          </div>
+          <div class="footer-column">
+              <h3>Правовая информация</h3>
+              <ul class="footer-links">
+                  <li><a href="../privacy.html">Политика конфиденциальности</a></li>
+              </ul>
+          </div>
+        </div>
+        <div class="footer-bottom">
+          <p>© 2025 - 2026 BlockChat. Все права защищены. | Разработано для приватного общения</p>
+        </div>
+      </div>
+    </footer>
+
+    <script>
+        // Переключение темы
+        const themeToggle = document.getElementById('themeToggle');
+        const html = document.documentElement;
+        
+        themeToggle.addEventListener('click', () => {
+            const currentTheme = html.getAttribute('data-theme');
+            const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+            html.setAttribute('data-theme', newTheme);
+            localStorage.setItem('theme', newTheme);
+        });
+        
+        const savedTheme = localStorage.getItem('theme');
+        if (savedTheme) {
+            html.setAttribute('data-theme', savedTheme);
+        }
+        
+        // Модальное окно
+        const modal = document.getElementById('modal');
+        const modalClose = document.getElementById('modalClose');
+        const modalOk = document.getElementById('modalOk');
+        const modalLinks = document.querySelectorAll('.modal-link');
+        
+        function showModal() {
+            modal.classList.add('show');
+            document.body.style.overflow = 'hidden';
+        }
+        
+        function closeModal() {
+            modal.classList.remove('show');
+            document.body.style.overflow = 'auto';
+        }
+        
+        modalClose.addEventListener('click', closeModal);
+        modalOk.addEventListener('click', closeModal);
+        
+        modalLinks.forEach(link => {
+            link.addEventListener('click', function(e) {
+                e.preventDefault();
+                showModal();
+            });
+        });
+        
+        modal.addEventListener('click', function(e) {
+            if (e.target === this) {
+                closeModal();
+            }
+        });
+        
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') {
+                closeModal();
+            }
+        });
+    </script>
+</body>
+</html>

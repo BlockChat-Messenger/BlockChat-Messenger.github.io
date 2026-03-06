@@ -6,7 +6,7 @@
     <title data-lang="blogTitle">Блог - BlockChat: Новости и статьи о P2P технологиях</title>
     <link rel="shortcut icon" href="images/icon.png">
     <meta name="description" content="Читайте последние новости BlockChat, технические статьи о P2P технологиях и руководства по использованию мессенджера.">
-    <meta name="keywords" content="BlockChat, блог, P2P, WebRTC, безопасность, приватность, мессенджер, новости">
+    <meta name="keywords" content="BlockChat, блог, P2P, WebRTC, безопасность, приватность, мессенджер, новости, BlockLink">
     <link rel="stylesheet" href="css/blogs.css">
 </head>
 <body>
@@ -65,6 +65,55 @@
     <section class="blog-posts">
         <div class="container">
             <div class="blog-grid">
+                <!-- BlockLink -->
+                <article class="blog-card" data-category="news technical">
+                    <div class="blog-card-image">
+                        <img src="images/blocklink-post.png" alt="BlockLink - виртуальные сети">
+                    </div>
+                    <div class="blog-card-content">
+                        <div class="blog-card-date" data-lang="date7">6 марта 2026</div>
+                        <h3 class="blog-card-title" data-lang="article7Title">BlockLink: виртуальные сети для приватного общения</h3>
+                        <p class="blog-card-excerpt" data-lang="article7Excerpt">Знакомьтесь: BlockLink — технология создания изолированных виртуальных сетей для каждого чата. Прямое P2P-соединение без настроек роутера.</p>
+                        <div class="blog-card-footer">
+                            <div class="blog-card-author">
+                                <img src="https://bereznyak72.github.io/img/logo.png" alt="nizi52" class="author-avatar">
+                                <a href="https://bereznyak72.github.io/" target="_blank">bereznyak72</a>
+                            </div>
+                            <a href="posts/blocklink-announce.html" class="blog-card-link">
+                                <span data-lang="readMore">Читать</span>
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M5 12H19M19 12L12 5M19 12L12 19" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                </svg>
+                            </a>
+                        </div>
+                    </div>
+                </article>
+
+                <!-- NAT и P2P -->
+                <article class="blog-card" data-category="technical educational">
+                    <div class="blog-card-image">
+                        <img src="images/nat-problem.png" alt="Проблема NAT в P2P">
+                    </div>
+                    <div class="blog-card-content">
+                        <div class="blog-card-date" data-lang="date6">6 марта 2026</div>
+                        <h3 class="blog-card-title" data-lang="article6Title">Как P2P-мессенджеры находят друг друга за роутерами?</h3>
+                        <p class="blog-card-excerpt" data-lang="article6Excerpt">Разбираемся, как P2P-мессенджеры обходят NAT и файрволы: от проброса портов до VPN-сетей. И представляем наше решение — BlockLink.</p>
+                        <div class="blog-card-footer">
+                            <div class="blog-card-author">
+                                <img src="https://nizi52.github.io/image/profile.png" alt="nizi52" class="author-avatar">
+                                <a href="https://nizi52.github.io/" target="_blank">nizi52</a>
+                            </div>
+                            <a href="posts/nat-problem.html" class="blog-card-link">
+                                <span data-lang="readMore">Читать</span>
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M5 12H19M19 12L12 5M19 12L12 19" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                </svg>
+                            </a>
+                        </div>
+                    </div>
+                </article>
+
+                <!-- Федеративные серверы -->
                 <article class="blog-card" data-category="educational">
                     <div class="blog-card-image">
                         <img src="images/federation-post.png" alt="Федеративные серверы">
@@ -87,6 +136,8 @@
                         </div>
                     </div>
                 </article>
+
+                <!-- Блокчейн -->
                 <article class="blog-card" data-category="educational">
                     <div class="blog-card-image">
                         <img src="images/blockchain-post.png" alt="Блокчейн технология">
@@ -110,10 +161,10 @@
                     </div>
                 </article>
 
+                <!-- P2P основы -->
                 <article class="blog-card" data-category="educational">
                     <div class="blog-card-image">
                         <img src="images/p2p-post.png" alt="Что такое P2P">
-                        <!-- <span class="blog-card-category" data-lang="categoryEducational">Образовательные</span> -->
                     </div>
                     <div class="blog-card-content">
                         <div class="blog-card-date" data-lang="date3">12 сентября 2025</div>
@@ -136,6 +187,7 @@
             </div>
         </div>
     </section>
+
     <div id="modal" class="modal">
       <div class="modal-content">
         <div class="modal-header">
@@ -159,6 +211,7 @@
         </div>
       </div>
     </div>
+
     <footer>
       <div class="container">
         <div class="footer-content">
@@ -221,6 +274,18 @@
                 date3: 'September 12, 2025',
                 article3Title: "What is P2P and why is it secure?",
                 article3Excerpt: "Explaining the principles of peer-to-peer technologies, their advantages for privacy and why they are becoming the future of communications.",
+                date4: 'September 25, 2025',
+                article4Title: 'Blockchain: Technology Basics and Its Application in P2P Communications',
+                article4Excerpt: 'Learn how blockchain technology works, why it is secure, and how it is used in decentralized messengers.',
+                date5: 'September 28, 2025',
+                article5Title: "Federated servers (Federation): what is it used for?",
+                article5Excerpt: "Find out what federated servers are, how they work in messengers such as Matrix and Mastodon, and how they differ from the pure P2P architecture of BlockChat.",
+                date6: 'March 6, 2026',
+                article6Title: "How do P2P messengers find each other behind routers?",
+                article6Excerpt: "Understanding how P2P messengers bypass NAT and firewalls: from port forwarding to VPN networks. And introducing our solution — BlockLink.",
+                date7: 'March 6, 2026',
+                article7Title: "BlockLink: virtual networks for private communication",
+                article7Excerpt: "Meet BlockLink — a technology for creating isolated virtual networks for each chat. Direct P2P connection without router setup.",
                 readMore: "Read",
                 home: "Home",
                 download: "Download",
@@ -240,13 +305,7 @@
                 rightsreserved: "© 2025 - 2026 BlockChat. All rights reserved. | Designed for private communication",
                 temporarilyunavailable: "Temporarily unavailable",
                 featuredevelopment: "This feature is currently under development. We are working on improving the website and will soon add this feature.",
-                okay: "Okay",
-                date4: 'September 25, 2025',
-                article4Title: 'Blockchain: Technology Basics and Its Application in P2P Communications',
-                article4Excerpt: 'Learn how blockchain technology works, why it is secure, and how it is used in decentralized messengers.',
-                article5Title: "Federated servers (Federation): what is it used for?",
-                article5Excerpt: "Find out what federated servers are, how they work in messengers such as Matrix and Mastodon, and how they differ from the pure P2P architecture of BlockChat.",
-                date5: 'September 28, 2025'
+                okay: "Okay"
             },
             ru: {
                 blogTitle: "Блог - BlockChat: Новости и статьи о P2P технологиях",
@@ -268,6 +327,18 @@
                 date3: '12 сентября 2025',
                 article3Title: "Что такое P2P и почему это безопасно?",
                 article3Excerpt: "Объясняем принципы peer-to-peer технологий, их преимущества для приватности и почему они становятся будущим коммуникаций.",
+                date4: '25 сентября 2025',
+                article4Title: 'Блокчейн: основы технологии и её применение в P2P коммуникациях',
+                article4Excerpt: 'Узнайте, как технология блокчейн работает, почему она безопасна и как применяется в децентрализованных мессенджерах.',
+                date5: '28 сентября 2025',
+                article5Title: "Федеративные серверы (Federation): что это и где используется?",
+                article5Excerpt: "Узнайте, что такое федеративные серверы, как они работают в таких мессенджерах, как Matrix и Mastodon, и чем они отличаются от чистой P2P архитектуры BlockChat.",
+                date6: '6 марта 2026',
+                article6Title: "Как P2P-мессенджеры находят друг друга за роутерами?",
+                article6Excerpt: "Разбираемся, как P2P-мессенджеры обходят NAT и файрволы: от проброса портов до VPN-сетей. И представляем наше решение — BlockLink.",
+                date7: '6 марта 2026',
+                article7Title: "BlockLink: виртуальные сети для приватного общения",
+                article7Excerpt: "Знакомьтесь: BlockLink — технология создания изолированных виртуальных сетей для каждого чата. Прямое P2P-соединение без настроек роутера.",
                 readMore: "Читать",
                 home: "Главная",
                 download: "Скачать",
@@ -287,13 +358,7 @@
                 rightsreserved: "© 2025 - 2026 BlockChat. Все права защищены. | Разработано для приватного общения",
                 temporarilyunavailable: "Временно недоступно",
                 featuredevelopment: "Данная функция находится в разработке. Мы работаем над улучшением сайта и скоро добавим эту возможность.",
-                okay: "Понятно",
-                date4: '25 сентября 2025',
-                article4Title: 'Блокчейн: основы технологии и её применение в P2P коммуникациях',
-                article4Excerpt: 'Узнайте, как технология блокчейн работает, почему она безопасна и как применяется в децентрализованных мессенджерах.',
-                article5Title: "Федеративные серверы (Federation): что это и где используется?",
-                article5Excerpt: "Узнайте, что такое федеративные серверы, как они работают в таких мессенджерах, как Matrix и Mastodon, и чем они отличаются от чистой P2P архитектуры BlockChat.",
-                date5: '28 сентября 2025'
+                okay: "Понятно"
             }
         };
 
@@ -368,7 +433,8 @@
                     const filter = button.getAttribute('data-filter');
                     
                     blogCards.forEach(card => {
-                        if (filter === 'all' || card.getAttribute('data-category') === filter) {
+                        if (filter === 'all' || card.getAttribute('data-category') === filter || 
+                            (card.getAttribute('data-category') && card.getAttribute('data-category').includes(filter))) {
                             card.style.display = 'flex';
                         } else {
                             card.style.display = 'none';

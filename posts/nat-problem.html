@@ -1,0 +1,358 @@
+<!DOCTYPE html>
+<html lang="ru" data-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Как P2P-мессенджеры находят друг друга за роутерами? Проблема NAT и её решения - Блог BlockChat</title>
+    <link rel="shortcut icon" href="../images/icon.png">
+    <meta name="description" content="Разбираемся, как P2P-мессенджеры обходят NAT и файрволы: от проброса портов до VPN-сетей. И представляем наше решение - BlockLink.">
+    <meta name="keywords" content="NAT, P2P, проброс портов, UDP hole punching, VPN, BlockLink, BlockChat">
+    <link rel="stylesheet" href="../css/posts.css">
+</head>
+<body>
+    <div class="container">
+        <nav>
+            <div class="logo">
+                <div class="logo-icon">
+                    <img src="../images/logo-white.png" width="30px"/>
+                </div>
+                <a href="../index.html">BlockChat</a>
+            </div>
+            <div class="nav-links">
+                <a href="../index.html" class="nav-link">Главная</a>
+                <a href="../blogs.html" class="nav-link">Блог</a>
+                <a href="../download.html" class="nav-link">Скачать</a>
+                <button class="theme-toggle" id="themeToggle" aria-label="Переключить тему">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M12 16C14.2091 16 16 14.2091 16 12C16 9.79086 14.2091 8 12 8C9.79086 8 8 9.79086 8 12C8 14.2091 9.79086 16 12 16Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                        <path d="M12 2V4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                        <path d="M12 20V22" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                        <path d="M4.93 4.93L6.34 6.34" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                        <path d="M17.66 17.66L19.07 19.07" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                        <path d="M2 12H4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                        <path d="M20 12H22" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                        <path d="M6.34 17.66L4.93 19.07" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                        <path d="M19.07 4.93L17.66 6.34" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                    </svg>
+                </button>
+            </div>
+        </nav>
+    </div>
+
+    <article class="article">
+        <div class="container">
+            <header class="article-hero">
+                <h1>Как P2P-мессенджеры находят друг друга за роутерами?</h1>
+                <div class="article-meta">
+                    <div class="article-meta-item">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                        <span>6 марта 2026</span>
+                    </div>
+                    <div class="article-meta-item">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                        <a href="https://nizi52.github.io/" target="_blank">nizi52</a>
+                    </div>
+                    <div class="article-meta-item">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M13 10V3L4 14h7v7l9-11h-7z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                        <span>15 мин чтения</span>
+                    </div>
+                </div>
+            </header>
+
+            <div class="article-content">
+                <figure class="article-image">
+                    <img src="../images/nat-problem.png" alt="Проблема NAT в P2P сетях">
+                    <figcaption>Как двум пользователям за разными роутерами соединиться напрямую?</figcaption>
+                </figure>
+
+                <p>Представьте: вы и ваш друг хотите пообщаться в P2P-мессенджере. Вы запускаете приложение, создаете чат, даете другу код... Но соединение не устанавливается. Почему? Потому что за каждым из вас стоит роутер с NAT (Network Address Translation), который скрывает ваши реальные IP-адреса и блокирует входящие подключения. Эта проблема существует столько же, сколько сам интернет, и у каждого P2P-мессенджера есть свой способ её решения.</p>
+
+                <div class="info-box">
+                    <h4>Суть проблемы NAT</h4>
+                    <p>Ваш компьютер в локальной сети имеет IP вида 192.168.1.10. Для внешнего мира ваш роутер показывает публичный IP 93.184.216.34. Когда друг пытается подключиться к вам по этому публичному IP, его пакет упирается в роутер, который не знает, какому устройству внутри сети его передать. И просто блокирует соединение.</p>
+                </div>
+
+                <h2>Как разные P2P-мессенджеры решают проблему NAT</h2>
+
+                <h3>1. Tox — UDP hole punching</h3>
+                <p>Tox — один из пионеров децентрализованных мессенджеров. Он использует технику <strong>UDP hole punching</strong>:</p>
+                <ul>
+                    <li>Оба клиента подключаются к DHT-сети (распределенная хеш-таблица)</li>
+                    <li>Отправляют UDP-пакеты на публичные адреса друг друга</li>
+                    <li>Роутер, видя исходящий пакет, создает временное правило для входящих</li>
+                    <li>Соединение устанавливается через эту "дырку"</li>
+                </ul>
+                <p><strong>Плюсы:</strong> Не требует настроек, полностью децентрализовано.<br>
+                <strong>Минусы:</strong> Не работает с симметричным NAT, требует UDP (не везде поддерживается).</p>
+
+                <h3>2. Briar — Tor onion-маршрутизация</h3>
+                <p>Briar использует сеть Tor для обхода NAT:</p>
+                <ul>
+                    <li>Все соединения идут через скрытые сервисы Tor</li>
+                    <li>NAT не проблема, так как соединение инициируется изнутри</li>
+                    <li>Дополнительно: Bluetooth и Wi-Fi Direct для локального общения</li>
+                </ul>
+                <p><strong>Плюсы:</strong> Полная анонимность, NAT не проблема.<br>
+                <strong>Минусы:</strong> Медленно (задержки Tor), сложная архитектура.</p>
+
+                <h3>3. Session — onion-роутинг на LokiNet</h3>
+                <p>Session построен на собственной сети LokiNet:</p>
+                <ul>
+                    <li>Использует 5 нод для маршрутизации каждого сообщения</li>
+                    <li>Ноды выступают ретрансляторами, обходя NAT</li>
+                    <li>Никто не знает полный путь сообщения</li>
+                </ul>
+                <p><strong>Плюсы:</strong> Анонимность, нет единой точки отказа.<br>
+                <strong>Минусы:</strong> Задержки, сложность сети.</p>
+
+                <h3>4. RetroShare — проброс портов</h3>
+                <p>RetroShare предлагает самый надежный, но сложный способ:</p>
+                <ul>
+                    <li>Пользователь вручную настраивает проброс портов на роутере</li>
+                    <li>UPnP для автоматической настройки (если поддерживается)</li>
+                    <li>Прямые TCP-соединения</li>
+                </ul>
+                <p><strong>Плюсы:</strong> 100% надежность, максимальная скорость.<br>
+                <strong>Минусы:</strong> Требует технических знаний, не у всех работает.</p>
+
+                <h3>5. Radmin VPN — виртуальные локальные сети</h3>
+                <p>Radmin VPN использует другой подход:</p>
+                <ul>
+                    <li>Создает виртуальный сетевой адаптер на компьютере</li>
+                    <li>Все участники одной сети получают виртуальные IP</li>
+                    <li>Трафик идет напрямую P2P (по возможности) или через ретрансляторы</li>
+                    <li>Для пользователя это выглядит как локальная сеть</li>
+                </ul>
+                <p><strong>Плюсы:</strong> Просто для пользователя, работает автоматически.<br>
+                <strong>Минусы:</strong> Требует центрального сервера для координации.</p>
+
+                <h2>Как эту проблему решает BlockChat?</h2>
+
+                <p>Проанализировав все существующие подходы, мы пришли к выводу: идеальное решение должно сочетать простоту Radmin VPN и децентрализацию P2P. И мы создали <strong>BlockLink</strong>.</p>
+
+                <div class="info-box">
+                    <h4>Знакомьтесь: BlockLink</h4>
+                    <p>BlockLink — это наша технология создания виртуальных сетей для каждого чата. Она работает незаметно для пользователя, но при этом обеспечивает прямое P2P-соединение в 95% случаев.</p>
+                    <p><a href="blocklink-announce.html" style="color: var(--primary); font-weight: bold;">Читать подробнее о BlockLink →</a></p>
+                </div>
+
+                <h3>Как работает BlockLink</h3>
+
+                <p><strong>Шаг 1. Знакомство на сервере BlockChat ID</strong><br>
+                Как и в других P2P-мессенджерах, у нас есть сигнальный сервер. При запуске приложение автоматически подключается к нему. Сервер запоминает ваш публичный IP и держит соединение открытым.</p>
+
+                <p><strong>Шаг 2. Создание виртуальной сети для чата</strong><br>
+                Когда кто-то создает новый чат, сервер создает изолированную виртуальную сеть. Первому участнику назначается виртуальный IP (например, 10.10.1.1). Когда присоединяется второй — получает 10.10.1.2. И так далее.</p>
+
+                <p><strong>Шаг 3. Прямое P2P через виртуальную сеть</strong><br>
+                Теперь оба участника "видят" друг друга в одной локальной сети. Приложение устанавливает прямое TCP-соединение между виртуальными IP. Сообщения идут напрямую, без участия сервера.</p>
+
+                <p><strong>Шаг 4. Резервный канал (если P2P не работает)</strong><br>
+                Если прямое соединение невозможно (симметричный NAT, корпоративный файрвол), сервер автоматически становится ретранслятором. Сообщения идут через него, но остаются зашифрованными E2E.</p>
+
+                <h3>Почему BlockLink лучше?</h3>
+
+                <table class="comparison-table">
+                    <thead>
+                        <tr>
+                            <th>Технология</th>
+                            <th>Простота</th>
+                            <th>Надежность</th>
+                            <th>Скорость</th>
+                            <th>Приватность</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>BlockLink</strong></td>
+                            <td>⭐⭐⭐⭐⭐</td>
+                            <td>⭐⭐⭐⭐</td>
+                            <td>⭐⭐⭐⭐</td>
+                            <td>⭐⭐⭐⭐</td>
+                        </tr>
+                        <tr>
+                            <td>UDP hole punching</td>
+                            <td>⭐⭐⭐</td>
+                            <td>⭐⭐⭐</td>
+                            <td>⭐⭐⭐⭐⭐</td>
+                            <td>⭐⭐⭐⭐</td>
+                        </tr>
+                        <tr>
+                            <td>Tor-маршрутизация</td>
+                            <td>⭐⭐⭐⭐</td>
+                            <td>⭐⭐⭐⭐</td>
+                            <td>⭐⭐</td>
+                            <td>⭐⭐⭐⭐⭐</td>
+                        </tr>
+                        <tr>
+                            <td>Ручной проброс</td>
+                            <td>⭐</td>
+                            <td>⭐⭐⭐⭐⭐</td>
+                            <td>⭐⭐⭐⭐⭐</td>
+                            <td>⭐⭐⭐⭐</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <h3>Сравнение с другими решениями</h3>
+
+                <p><strong>Против Tox:</strong> Мы не полагаемся на UDP hole punching, который часто не работает в современных сетях. BlockLink использует TCP, который гарантированно доставит сообщение.</p>
+
+                <p><strong>Против Briar/Session:</strong> Нам не нужны сложные onion-сети с огромными задержками. Мы используем прямое P2P, когда это возможно, и только в крайнем случае — ретрансляцию.</p>
+
+                <p><strong>Против RetroShare:</strong> Пользователю не нужно лезть в настройки роутера. Все работает автоматически, как в Radmin VPN, но с фокусом на приватность.</p>
+
+                <p><strong>Против Radmin VPN:</strong> Мы не создаем одну большую сеть для всех, а изолируем каждый чат в отдельную виртуальную сеть. Это повышает безопасность и упрощает маршрутизацию.</p>
+
+                <div class="info-box">
+                    <h4>Хотите узнать подробности?</h4>
+                    <p>Мы написали отдельную статью, посвященную технологии BlockLink: как она работает изнутри, какие протоколы использует и что планируем добавить в будущем.</p>
+                    <p style="text-align: center; margin-top: 20px;">
+                        <a href="blocklink-announce.html" class="btn btn-primary" style="text-decoration: none;">Читать о BlockLink →</a>
+                    </p>
+                </div>
+
+                <h2>Заключение</h2>
+
+                <p>Проблема NAT существует столько же, сколько сам интернет. За годы было придумано множество решений — от простого проброса портов до сложных распределенных сетей. BlockChat выбирает свой путь: мы создаем для каждого чата изолированную виртуальную сеть, в которой участники видят друг друга как в одной локальной сети. Это просто для пользователя, надежно технически и безопасно для переписки.</p>
+
+                <p>BlockLink уже работает в тестовой версии BlockChat, и мы активно дорабатываем его на основе тестов.</p>
+
+                <div class="article-navigation">
+                    <a href="../blogs.html" class="nav-button">
+                        К списку статей
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M9 5l7 7-7 7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </article>
+
+    <div id="modal" class="modal">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h3>Временно недоступно</h3>
+          <button class="modal-close" id="modalClose">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M18 6L6 18M6 6l12 12" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </button>
+        </div>
+        <div class="modal-body">
+          <div class="modal-icon">
+            <svg width="48" height="48" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" stroke="var(--warning)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </div>
+          <p>Данная функция находится в разработке. Мы работаем над улучшением сайта и скоро добавим эту возможность.</p>
+        </div>
+        <div class="modal-footer">
+          <button class="btn btn-primary" id="modalOk">Понятно</button>
+        </div>
+      </div>
+    </div>
+
+    <footer>
+      <div class="container">
+        <div class="footer-content">
+          <div class="footer-column">
+            <h3>Продукт</h3>
+            <ul class="footer-links">
+              <li><a href="../download.html">Скачать</a></li>
+              <li><a href="../index.html#features">Особенности</a></li>
+              <li><a href="../index.html#how-it-works">Как подключиться</a></li>
+              <li><a href="../index.html#backlog">Бэклог</a></li>
+            </ul>
+          </div>
+          <div class="footer-column">
+            <h3>Поддержка</h3>
+            <ul class="footer-links">
+              <li><a href="#" class="modal-link">Сообщить об ошибке</a></li>
+              <li><a href="#" class="modal-link">Запросить функцию</a></li>
+            </ul>
+          </div>
+          <div class="footer-column">
+            <h3>Сообщество</h3>
+            <ul class="footer-links">
+              <li><a href="../blogs.html">Блог</a></li>
+              <li><a href="../download.html#version-history">Релизы</a></li>
+            </ul>
+          </div>
+          <div class="footer-column">
+              <h3>Правовая информация</h3>
+              <ul class="footer-links">
+                  <li><a href="../privacy.html">Политика конфиденциальности</a></li>
+              </ul>
+          </div>
+        </div>
+        <div class="footer-bottom">
+          <p>© 2025 - 2026 BlockChat. Все права защищены. | Разработано для приватного общения</p>
+        </div>
+      </div>
+    </footer>
+
+    <script>
+        // Переключение темы
+        const themeToggle = document.getElementById('themeToggle');
+        const html = document.documentElement;
+        
+        themeToggle.addEventListener('click', () => {
+            const currentTheme = html.getAttribute('data-theme');
+            const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+            html.setAttribute('data-theme', newTheme);
+            localStorage.setItem('theme', newTheme);
+        });
+        
+        const savedTheme = localStorage.getItem('theme');
+        if (savedTheme) {
+            html.setAttribute('data-theme', savedTheme);
+        }
+        
+        // Модальное окно
+        const modal = document.getElementById('modal');
+        const modalClose = document.getElementById('modalClose');
+        const modalOk = document.getElementById('modalOk');
+        const modalLinks = document.querySelectorAll('.modal-link');
+        
+        function showModal() {
+            modal.classList.add('show');
+            document.body.style.overflow = 'hidden';
+        }
+        
+        function closeModal() {
+            modal.classList.remove('show');
+            document.body.style.overflow = 'auto';
+        }
+        
+        modalClose.addEventListener('click', closeModal);
+        modalOk.addEventListener('click', closeModal);
+        
+        modalLinks.forEach(link => {
+            link.addEventListener('click', function(e) {
+                e.preventDefault();
+                showModal();
+            });
+        });
+        
+        modal.addEventListener('click', function(e) {
+            if (e.target === this) {
+                closeModal();
+            }
+        });
+        
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') {
+                closeModal();
+            }
+        });
+    </script>
+</body>
+</html>
