@@ -2,365 +2,421 @@
 <html lang="ru" data-theme="dark">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
     <title data-lang="privacyTitle">Политика конфиденциальности - BlockChat</title>
-    <link rel="shortcut icon" href="images/icon.png">
+    <link rel="shortcut icon" href="images/icon-white.png">
+    <meta name="description" content="Политика конфиденциальности BlockChat. Узнайте, как мы защищаем вашу приватность и обеспечиваем безопасность сообщений в P2P мессенджере.">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700;14..32,800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <link rel="stylesheet" href="css/privacy.css">
 </head>
 <body>
-    <div class="container">
-        <nav>
+    <div class="animated-gradient-bg"></div>
+    <canvas id="particleCanvas" class="floating-particles"></canvas>
+
+    <nav>
+        <div class="nav-container">
             <div class="logo">
-                <div class="logo-icon">
-                    <img src="images/logo-white.png" width="30px" alt="BlockChat"/>
-                </div>
+                <div class="logo-icon"><img src="images/icon-white.png" width="23px" style="filter: brightness(0) invert(1);" /></div>
                 <a href="index.html">BlockChat</a>
             </div>
             <div class="nav-links">
                 <a href="index.html" class="nav-link" data-lang="home">Главная</a>
-                <a href="blogs.html" class="nav-link" data-lang="BlogFooter">Блог</a>
+                <a href="blogs.html" class="nav-link" data-lang="blogs">Блог</a>
                 <a href="download.html" class="nav-link" data-lang="download">Скачать</a>
-                <div class="language-switch">
-                    <label class="switch">
-                        <input type="checkbox" id="langToggle">
-                        <span class="slider">
-                            <span class="lang-text ru">RU</span>
-                            <span class="lang-text en">EN</span>
-                        </span>
-                    </label>
-                </div>
-                <button class="theme-toggle" id="themeToggle" aria-label="Переключить тему">
-                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M12 16C14.2091 16 16 14.2091 16 12C16 9.79086 14.2091 8 12 8C9.79086 8 8 9.79086 8 12C8 14.2091 9.79086 16 12 16Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
-                        <path d="M12 2V4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
-                        <path d="M12 20V22" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
-                        <path d="M4.93 4.93L6.34 6.34" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
-                        <path d="M17.66 17.66L19.07 19.07" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
-                        <path d="M2 12H4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
-                        <path d="M20 12H22" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
-                        <path d="M6.34 17.66L4.93 19.07" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
-                        <path d="M19.07 4.93L17.66 6.34" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
-                    </svg>
-                </button>
+                <button id="langToggle" class="lang-switch">RU</button>
             </div>
-            
-            <!-- Бургер-меню кнопка -->
-            <button class="burger-menu" id="burgerMenu" aria-label="Меню">
-                <span class="burger-line"></span>
-                <span class="burger-line"></span>
-                <span class="burger-line"></span>
-            </button>
-        </nav>
+            <div class="burger-menu" id="burgerMenu">
+                <div class="burger-line"></div>
+                <div class="burger-line"></div>
+                <div class="burger-line"></div>
+            </div>
+        </div>
+    </nav>
+
+    <div class="mobile-nav" id="mobileNav">
+        <a href="index.html" class="nav-link" data-lang="home">Главная</a>
+        <a href="blogs.html" class="nav-link" data-lang="blogs">Блог</a>
+        <a href="download.html" class="nav-link" data-lang="download">Скачать</a>
+        <button id="mobileLangToggle" class="lang-switch" style="width: 100%; justify-content: center;">RU</button>
     </div>
-
-    <!-- Мобильное меню -->
-    <div class="mobile-overlay" id="mobileOverlay"></div>
-    <div class="mobile-menu" id="mobileMenu">
-        <button class="menu-close" id="menuClose" aria-label="Закрыть меню">
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path d="M18 6L6 18M6 6l12 12" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-            </svg>
-        </button>
-
-        <div class="mobile-menu-header">
-            <div class="mobile-logo">
-                <img src="images/logo.png" width="40px" alt="BlockChat"/>
-                <span>BlockChat</span>
-            </div>
-        </div>
-        
-        <div class="mobile-nav">
-            <a href="index.html" class="mobile-nav-link">
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M3 9L12 3L21 9V20H3V9Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                    <path d="M9 20V14H15V20" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                </svg>
-                <span data-lang="home">Главная</span>
-            </a>
-            <a href="blogs.html" class="mobile-nav-link">
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M4 4H20V20H4V4Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                    <path d="M8 8H16" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                    <path d="M8 12H16" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                    <path d="M8 16H13" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                </svg>
-                <span data-lang="BlogFooter">Блог</span>
-            </a>
-            <a href="download.html" class="mobile-nav-link">
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M4 16L4 20H20L20 16" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                    <path d="M12 4L12 12M12 12L15 9M12 12L9 9" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                </svg>
-                <span data-lang="download">Скачать</span>
-            </a>
-            <a href="index.html#features" class="mobile-nav-link">
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M12 2L15.09 8.26L22 9.27L17 14.14L18.18 21.02L12 17.77L5.82 21.02L7 14.14L2 9.27L8.91 8.26L12 2Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                </svg>
-                <span data-lang="features">Особенности</span>
-            </a>
-            <a href="index.html#how-it-works" class="mobile-nav-link">
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="2"/>
-                    <path d="M12 6V12L16 14" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
-                </svg>
-                <span data-lang="howitworks">Как подключиться</span>
-            </a>
-        </div>
-
-        <div class="mobile-controls">
-            <div class="control-item">
-                <span class="control-label">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-translate" viewBox="0 0 16 16">
-                        <path d="M4.545 6.714 4.11 8H3l1.862-5h1.284L8 8H6.833l-.435-1.286zm1.634-.736L5.5 3.956h-.049l-.679 2.022z"/>
-                        <path d="M0 2a2 2 0 0 1 2-2h7a2 2 0 0 1 2 2v3h3a2 2 0 0 1 2 2v7a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2v-3H2a2 2 0 0 1-2-2zm2-1a1 1 0 0 0-1 1v7a1 1 0 0 0 1 1h7a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1zm7.138 9.995q.289.451.63.846c-.748.575-1.673 1.001-2.768 1.292.178.217.451.635.555.867 1.125-.359 2.08-.844 2.886-1.494.777.665 1.739 1.165 2.93 1.472.133-.254.414-.673.629-.89-1.125-.253-2.057-.694-2.82-1.284.681-.747 1.222-1.651 1.621-2.757H14V8h-3v1.047h.765c-.318.844-.74 1.546-1.272 2.13a6 6 0 0 1-.415-.492 2 2 0 0 1-.94.31"/>
-                    </svg>
-                    <span>Язык</span>
-                </span>
-                <div class="mobile-lang-switch" id="mobileLangSwitch">
-                    <button class="mobile-lang-btn active" data-lang="ru">RU</button>
-                    <button class="mobile-lang-btn" data-lang="en">EN</button>
-                </div>
-            </div>
-            
-            <div class="control-item">
-                <span class="control-label">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-brilliance" viewBox="0 0 16 16">
-                        <path d="M8 16A8 8 0 1 1 8 0a8 8 0 0 1 0 16M1 8a7 7 0 0 0 7 7 3.5 3.5 0 1 0 0-7 3.5 3.5 0 1 1 0-7 7 7 0 0 0-7 7"/>
-                    </svg>
-                    <span>Тема</span>
-                </span>
-                <div class="mobile-theme-toggle" id="mobileThemeToggle">
-                    <button class="mobile-theme-btn active" data-theme="dark">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-moon-fill" viewBox="0 0 16 16">
-                            <path d="M6 .278a.77.77 0 0 1 .08.858 7.2 7.2 0 0 0-.878 3.46c0 4.021 3.278 7.277 7.318 7.277q.792-.001 1.533-.16a.79.79 0 0 1 .81.316.73.73 0 0 1-.031.893A8.35 8.35 0 0 1 8.344 16C3.734 16 0 12.286 0 7.71 0 4.266 2.114 1.312 5.124.06A.75.75 0 0 1 6 .278"/>
-                        </svg>
-                    </button>
-                    <button class="mobile-theme-btn" data-theme="light">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-brightness-high-fill" viewBox="0 0 16 16">
-                            <path d="M12 8a4 4 0 1 1-8 0 4 4 0 0 1 8 0M8 0a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-1 0v-2A.5.5 0 0 1 8 0m0 13a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-1 0v-2A.5.5 0 0 1 8 13m8-5a.5.5 0 0 1-.5.5h-2a.5.5 0 0 1 0-1h2a.5.5 0 0 1 .5.5M3 8a.5.5 0 0 1-.5.5h-2a.5.5 0 0 1 0-1h2A.5.5 0 0 1 3 8m10.657-5.657a.5.5 0 0 1 0 .707l-1.414 1.415a.5.5 0 1 1-.707-.708l1.414-1.414a.5.5 0 0 1 .707 0m-9.193 9.193a.5.5 0 0 1 0 .707L3.05 13.657a.5.5 0 0 1-.707-.707l1.414-1.414a.5.5 0 0 1 .707 0m9.193 2.121a.5.5 0 0 1-.707 0l-1.414-1.414a.5.5 0 0 1 .707-.707l1.414 1.414a.5.5 0 0 1 0 .707M4.464 4.465a.5.5 0 0 1-.707 0L2.343 3.05a.5.5 0 1 1 .707-.707l1.414 1.414a.5.5 0 0 1 0 .708"/>
-                        </svg>
-                    </button>
-                </div>
-            </div>
-        </div>
-    </div>
+    <div class="overlay" id="overlay"></div>
 
     <section class="hero">
         <div class="container">
             <h1 data-lang="privacyHeader">Политика конфиденциальности</h1>
             <p data-lang="privacySubheader">Узнайте, как BlockChat защищает вашу приватность и обеспечивает безопасность ваших сообщений</p>
-            <a href="index.html" class="btn btn-primary" data-lang="home">На главную</a>
+            <a href="index.html" class="btn btn-primary"><i class="fas fa-arrow-left"></i> <span data-lang="home">На главную</span></a>
         </div>
     </section>
 
     <section class="privacy-content">
         <div class="container">
-            <div class="privacy-section">
-                <h2 data-lang="privacyPrinciples">Принципы конфиденциальности BlockChat</h2>
-                <p data-lang="privacyPrinciplesText">BlockChat — это децентрализованный P2P мессенджер с системой BlockChat ID, созданный с принципом полной приватности пользователей. В отличие от традиционных мессенджеров, мы обеспечиваем безопасное общение через уникальные идентификаторы без хранения личных данных.</p>
-                
-                <div class="privacy-highlight">
-                    <p data-lang="privacyHighlight1">BlockChat использует систему BlockChat ID для идентификации пользователей. Ваши сообщения передаются напрямую между устройствами через зашифрованные P2P соединения после установки связи через сервер BlockChat ID.</p>
+            <div class="privacy-grid">
+                <div class="privacy-section glass-card fade-in">
+                    <h2><i class="fas fa-shield-alt"></i> <span data-lang="privacyPrinciples">Принципы конфиденциальности BlockChat</span></h2>
+                    <p data-lang="privacyPrinciplesText">BlockChat — это децентрализованный P2P мессенджер с системой BlockChat ID, созданный с принципом полной приватности пользователей. В отличие от традиционных мессенджеров, мы обеспечиваем безопасное общение через уникальные идентификаторы без хранения личных данных.</p>
+                    <div class="privacy-highlight">
+                        <i class="fas fa-info-circle"></i>
+                        <p data-lang="privacyHighlight1">BlockChat использует систему BlockChat ID для идентификации пользователей. Ваши сообщения передаются напрямую между устройствами через зашифрованные P2P соединения после установки связи через сервер BlockChat ID.</p>
+                    </div>
                 </div>
-            </div>
 
-            <div class="privacy-section">
-                <h2 data-lang="dataWeCollect">Какие данные мы собираем для работы BlockChat ID</h2>
-                <p data-lang="dataWeCollectText">Для обеспечения работы системы BlockChat ID мы временно храним:</p>
-                
-                <ul>
-                    <li data-lang="collect1">BlockChat ID (уникальный идентификатор пользователя)</li>
-                    <li data-lang="collect2">Никнейм пользователя (отображаемое имя)</li>
-                    <li data-lang="collect3">Публичный ключ шифрования</li>
-                    <li data-lang="collect4">IP-адрес (только для установки P2P соединения)</li>
-                    <li data-lang="collect5">Информацию о созданных чатах и их участниках</li>
-                </ul>
-                
-                <p data-lang="dataWeCollectText2">Эти данные необходимы для функционирования системы идентификации и подключения пользователей. Они хранятся только во время активности пользователя в системе.</p>
-            </div>
-
-            <div class="privacy-section">
-                <h2 data-lang="dataWeDontCollect">Какие данные мы НЕ собираем</h2>
-                <p data-lang="dataWeDontCollectText">В отличие от большинства мессенджеров, BlockChat сознательно не собирает:</p>
-                
-                <ul>
-                    <li data-lang="dontCollect1">Персональные данные (имя, email, номер телефона)</li>
-                    <li data-lang="dontCollect2">Контакты из вашей адресной книги</li>
-                    <li data-lang="dontCollect3">Содержание сообщений и переписки</li>
-                    <li data-lang="dontCollect4">Метаданные сообщений (время отправки, содержимое)</li>
-                    <li data-lang="dontCollect5">Геолокационные данные</li>
-                    <li data-lang="dontCollect6">Информацию об устройствах в сети</li>
-                    <li data-lang="dontCollect7">Файлы, передаваемые между пользователями</li>
-                    <li data-lang="dontCollect8">Историю подключений к чатам</li>
-                </ul>
-                
-                <div class="privacy-highlight">
-                    <p data-lang="privacyHighlight2">Ваши сообщения и файлы никогда не проходят через наши серверы и не хранятся в каком-либо централизованном хранилище. Они существуют только на устройствах отправителя и получателя после установки P2P соединения.</p>
+                <div class="privacy-section glass-card fade-in">
+                    <h2><i class="fas fa-database"></i> <span data-lang="dataWeCollect">Какие данные мы собираем для работы BlockChat ID</span></h2>
+                    <p data-lang="dataWeCollectText">Для обеспечения работы системы BlockChat ID мы временно храним:</p>
+                    <ul class="feature-list">
+                        <li><i class="fas fa-id-card"></i> <span data-lang="collect1">BlockChat ID (уникальный идентификатор пользователя)</span></li>
+                        <li><i class="fas fa-user"></i> <span data-lang="collect2">Никнейм пользователя (отображаемое имя)</span></li>
+                        <li><i class="fas fa-key"></i> <span data-lang="collect3">Публичный ключ шифрования</span></li>
+                        <li><i class="fas fa-network-wired"></i> <span data-lang="collect4">IP-адрес (только для установки P2P соединения)</span></li>
+                        <li><i class="fas fa-comments"></i> <span data-lang="collect5">Информацию о созданных чатах и их участниках</span></li>
+                    </ul>
+                    <p data-lang="dataWeCollectText2">Эти данные необходимы для функционирования системы идентификации и подключения пользователей. Они хранятся только во время активности пользователя в системе.</p>
                 </div>
-            </div>
 
-            <div class="privacy-section">
-                <h2 data-lang="technicalImplementation">Техническая реализация приватности</h2>
-                <p data-lang="technicalImplementationText">BlockChat использует следующие технологии для обеспечения приватности:</p>
-                
-                <h3 data-lang="blockchatidSystem">Система BlockChat ID</h3>
-                <p data-lang="blockchatidSystemText">Централизованный сервер управляет уникальными идентификаторами пользователей и чатами, но не имеет доступа к содержимому сообщений.</p>
-                
-                <h3 data-lang="p2pArchitecture">P2P Архитектура</h3>
-                <p data-lang="p2pArchitectureText">После установления связи через BlockChat ID, приложение создает прямое соединение между устройствами пользователей без промежуточных серверов для передачи данных.</p>
-                
-                <h3 data-lang="signalingServer">Сервер BlockChat ID</h3>
-                <p data-lang="signalingServerText">Сервер используется только для регистрации пользователей, создания чатов и установления первоначального контакта между участниками. Он не участвует в передаче сообщений.</p>
-            </div>
+                <div class="privacy-section glass-card fade-in">
+                    <h2><i class="fas fa-ban"></i> <span data-lang="dataWeDontCollect">Какие данные мы НЕ собираем</span></h2>
+                    <p data-lang="dataWeDontCollectText">В отличие от большинства мессенджеров, BlockChat сознательно не собирает:</p>
+                    <div class="two-columns">
+                        <ul class="feature-list">
+                            <li><i class="fas fa-user-slash"></i> <span data-lang="dontCollect1">Персональные данные (имя, email, номер телефона)</span></li>
+                            <li><i class="fas fa-address-book"></i> <span data-lang="dontCollect2">Контакты из вашей адресной книги</span></li>
+                            <li><i class="fas fa-envelope"></i> <span data-lang="dontCollect3">Содержание сообщений и переписки</span></li>
+                            <li><i class="fas fa-chart-line"></i> <span data-lang="dontCollect4">Метаданные сообщений (время отправки, содержимое)</span></li>
+                        </ul>
+                        <ul class="feature-list">
+                            <li><i class="fas fa-map-marker-alt"></i> <span data-lang="dontCollect5">Геолокационные данные</span></li>
+                            <li><i class="fas fa-microchip"></i> <span data-lang="dontCollect6">Информацию об устройствах в сети</span></li>
+                            <li><i class="fas fa-file"></i> <span data-lang="dontCollect7">Файлы, передаваемые между пользователями</span></li>
+                            <li><i class="fas fa-history"></i> <span data-lang="dontCollect8">Историю подключений к чатам</span></li>
+                        </ul>
+                    </div>
+                    <div class="privacy-highlight">
+                        <i class="fas fa-lock"></i>
+                        <p data-lang="privacyHighlight2">Ваши сообщения и файлы никогда не проходят через наши серверы и не хранятся в каком-либо централизованном хранилище. Они существуют только на устройствах отправителя и получателя после установки P2P соединения.</p>
+                    </div>
+                </div>
 
-            <div class="privacy-section">
-                <h2 data-lang="encryptionSecurity">Шифрование и безопасность</h2>
-                <p data-lang="encryptionSecurityText">BlockChat использует современные методы шифрования для защиты ваших данных:</p>
-                
-                <h3 data-lang="e2eEncryption">Сквозное шифрование (End-to-End Encryption)</h3>
-                <p data-lang="e2eEncryptionText">Все сообщения и файлы шифруются на устройстве отправителя и расшифровываются только на устройстве получателя.</p>
-                
-                <h3 data-lang="keyManagement">Управление ключами</h3>
-                <p data-lang="keyManagementText">Каждый пользователь имеет пару криптографических ключей. Публичный ключ хранится на сервере BlockChat ID для идентификации, приватный ключ хранится только на устройстве пользователя.</p>
-                
-                <h3 data-lang="chatSecurity">Безопасность чатов</h3>
-                <p data-lang="chatSecurityText">6-значные коды чатов генерируются случайным образом и используются только для подключения участников. Сервер BlockChat ID не имеет доступа к содержимому чатов.</p>
-            </div>
+                <div class="privacy-section glass-card fade-in">
+                    <h2><i class="fas fa-microchip"></i> <span data-lang="technicalImplementation">Техническая реализация приватности</span></h2>
+                    <p data-lang="technicalImplementationText">BlockChat использует следующие технологии для обеспечения приватности:</p>
+                    <div class="tech-grid">
+                        <div class="tech-item">
+                            <i class="fas fa-id-badge"></i>
+                            <h3 data-lang="blockchatidSystem">Система BlockChat ID</h3>
+                            <p data-lang="blockchatidSystemText">Централизованный сервер управляет уникальными идентификаторами пользователей и чатами, но не имеет доступа к содержимому сообщений.</p>
+                        </div>
+                        <div class="tech-item">
+                            <i class="fas fa-project-diagram"></i>
+                            <h3 data-lang="p2pArchitecture">P2P Архитектура</h3>
+                            <p data-lang="p2pArchitectureText">После установления связи через BlockChat ID, приложение создает прямое соединение между устройствами пользователей без промежуточных серверов для передачи данных.</p>
+                        </div>
+                        <div class="tech-item">
+                            <i class="fas fa-server"></i>
+                            <h3 data-lang="signalingServer">Сервер BlockChat ID</h3>
+                            <p data-lang="signalingServerText">Сервер используется только для регистрации пользователей, создания чатов и установления первоначального контакта между участниками. Он не участвует в передаче сообщений.</p>
+                        </div>
+                    </div>
+                </div>
 
-            <div class="privacy-section">
-                <h2 data-lang="dataStorage">Хранение данных</h2>
-                <p data-lang="dataStorageText">BlockChat обеспечивает защищенное хранение данных:</p>
-                
-                <ul>
-                    <li data-lang="storage1">История сообщений хранится только на вашем устройстве</li>
-                    <li data-lang="storage2">BlockChat ID и настройки сохраняются локально</li>
-                    <li data-lang="storage3">Приватные ключи никогда не покидают ваше устройство</li>
-                    <li data-lang="storage4">Сервер BlockChat ID хранит только информацию, необходимую для идентификации и подключения</li>
-                    <li data-lang="storage5">При удалении аккаунта все данные немедленно удаляются с сервера</li>
-                </ul>
-            </div>
+                <div class="privacy-section glass-card fade-in">
+                    <h2><i class="fas fa-lock"></i> <span data-lang="encryptionSecurity">Шифрование и безопасность</span></h2>
+                    <p data-lang="encryptionSecurityText">BlockChat использует современные методы шифрования для защиты ваших данных:</p>
+                    <div class="encryption-grid">
+                        <div class="encryption-item">
+                            <i class="fas fa-key"></i>
+                            <h3 data-lang="e2eEncryption">Сквозное шифрование</h3>
+                            <p data-lang="e2eEncryptionText">Все сообщения и файлы шифруются на устройстве отправителя и расшифровываются только на устройстве получателя.</p>
+                        </div>
+                        <div class="encryption-item">
+                            <i class="fas fa-key"></i>
+                            <h3 data-lang="keyManagement">Управление ключами</h3>
+                            <p data-lang="keyManagementText">Каждый пользователь имеет пару криптографических ключей. Публичный ключ хранится на сервере BlockChat ID для идентификации, приватный ключ хранится только на устройстве пользователя.</p>
+                        </div>
+                        <div class="encryption-item">
+                            <i class="fas fa-hashtag"></i>
+                            <h3 data-lang="chatSecurity">Безопасность чатов</h3>
+                            <p data-lang="chatSecurityText">6-значные коды чатов генерируются случайным образом и используются только для подключения участников. Сервер BlockChat ID не имеет доступа к содержимому чатов.</p>
+                        </div>
+                    </div>
+                </div>
 
-            <div class="privacy-section">
-                <h2 data-lang="userControl">Контроль пользователя</h2>
-                <p data-lang="userControlText">Вы имеете полный контроль над своими данными:</p>
-                
-                <h3 data-lang="accountManagement">Управление аккаунтом</h3>
-                <p data-lang="accountManagementText">Вы можете в любой момент изменить никнейм, просмотреть свой BlockChat ID или полностью удалить аккаунт через настройки приложения.</p>
-                
-                <h3 data-lang="dataExport">Экспорт данных</h3>
-                <p data-lang="dataExportText">Вся ваша история сообщений хранится локально и может быть просмотрена только через приложение BlockChat.</p>
-                
-                <h3 data-lang="chatManagement">Управление чатами</h3>
-                <p data-lang="chatManagementText">Вы можете создавать чаты, присоединяться к ним по кодам и покидать чаты в любое время.</p>
-            </div>
+                <div class="privacy-section glass-card fade-in">
+                    <h2><i class="fas fa-hdd"></i> <span data-lang="dataStorage">Хранение данных</span></h2>
+                    <p data-lang="dataStorageText">BlockChat обеспечивает защищенное хранение данных:</p>
+                    <ul class="feature-list">
+                        <li><i class="fas fa-check-circle"></i> <span data-lang="storage1">История сообщений хранится только на вашем устройстве</span></li>
+                        <li><i class="fas fa-check-circle"></i> <span data-lang="storage2">BlockChat ID и настройки сохраняются локально</span></li>
+                        <li><i class="fas fa-check-circle"></i> <span data-lang="storage3">Приватные ключи никогда не покидают ваше устройство</span></li>
+                        <li><i class="fas fa-check-circle"></i> <span data-lang="storage4">Сервер BlockChat ID хранит только информацию, необходимую для идентификации и подключения</span></li>
+                        <li><i class="fas fa-check-circle"></i> <span data-lang="storage5">При удалении аккаунта все данные немедленно удаляются с сервера</span></li>
+                    </ul>
+                </div>
 
-            <div class="privacy-section">
-                <h2 data-lang="thirdPartyServices">Сторонние услуги и интеграции</h2>
-                <p data-lang="thirdPartyServicesText1">BlockChat не использует сторонние аналитические сервисы, рекламные сети или трекеры, которые могли бы собирать ваши данные.</p>
-                
-                <p data-lang="thirdPartyServicesText2">Единственное исключение — службы распространения приложений (такие как GitHub Releases), которые могут собирать анонимную статистику загрузок в соответствии со своими политиками конфиденциальности.</p>
-            </div>
+                <div class="privacy-section glass-card fade-in">
+                    <h2><i class="fas fa-user-cog"></i> <span data-lang="userControl">Контроль пользователя</span></h2>
+                    <p data-lang="userControlText">Вы имеете полный контроль над своими данными:</p>
+                    <div class="control-grid">
+                        <div class="control-item">
+                            <i class="fas fa-id-card"></i>
+                            <h3 data-lang="accountManagement">Управление аккаунтом</h3>
+                            <p data-lang="accountManagementText">Вы можете в любой момент изменить никнейм, просмотреть свой BlockChat ID или полностью удалить аккаунт через настройки приложения.</p>
+                        </div>
+                        <div class="control-item">
+                            <i class="fas fa-download"></i>
+                            <h3 data-lang="dataExport">Экспорт данных</h3>
+                            <p data-lang="dataExportText">Вся ваша история сообщений хранится локально и может быть просмотрена только через приложение BlockChat.</p>
+                        </div>
+                        <div class="control-item">
+                            <i class="fas fa-comments"></i>
+                            <h3 data-lang="chatManagement">Управление чатами</h3>
+                            <p data-lang="chatManagementText">Вы можете создавать чаты, присоединяться к ним по кодам и покидать чаты в любое время.</p>
+                        </div>
+                    </div>
+                </div>
 
-            <div class="privacy-section">
-                <h2 data-lang="updatesSupport">Обновления и поддержка</h2>
-                <p data-lang="updatesSupportText1">Приложение проверяет наличие обновлений через официальный сайт BlockChat. При проверке передается только номер версии вашего приложения.</p>
-                
-                <p data-lang="updatesSupportText2">Сообщения об ошибках и запросы функций отправляются добровольно через GitHub Issues и содержат только информацию, которую вы явно указали в отчете.</p>
-            </div>
+                <div class="privacy-section glass-card fade-in">
+                    <h2><i class="fas fa-plug"></i> <span data-lang="thirdPartyServices">Сторонние услуги и интеграции</span></h2>
+                    <p data-lang="thirdPartyServicesText1">BlockChat не использует сторонние аналитические сервисы, рекламные сети или трекеры, которые могли бы собирать ваши данные.</p>
+                    <p data-lang="thirdPartyServicesText2">Единственное исключение — службы распространения приложений (такие как GitHub Releases), которые могут собирать анонимную статистику загрузок в соответствии со своими политиками конфиденциальности.</p>
+                </div>
 
-            <div class="privacy-section">
-                <h2 data-lang="policyChanges">Изменения в политике конфиденциальности</h2>
-                <p data-lang="policyChangesText1">Мы можем периодически обновлять эту политику конфиденциальности. О любых изменениях мы будем уведомлять через:</p>
-                
-                <ul>
-                    <li data-lang="policyChanges1">Официальный сайт BlockChat</li>
-                    <li data-lang="policyChanges2">Релиз-ноты новых версий приложения</li>
-                    <li data-lang="policyChanges3">Уведомления в самом приложении</li>
-                </ul>
-                
-                <p data-lang="policyChangesText2">Продолжение использования BlockChat после внесения изменений означает ваше согласие с обновленной политикой конфиденциальности.</p>
-            </div>
+                <div class="privacy-section glass-card fade-in">
+                    <h2><i class="fas fa-sync-alt"></i> <span data-lang="updatesSupport">Обновления и поддержка</span></h2>
+                    <p data-lang="updatesSupportText1">Приложение проверяет наличие обновлений через официальный сайт BlockChat. При проверке передается только номер версии вашего приложения.</p>
+                    <p data-lang="updatesSupportText2">Сообщения об ошибках и запросы функций отправляются добровольно через GitHub Issues и содержат только информацию, которую вы явно указали в отчете.</p>
+                </div>
 
-            <div class="privacy-section">   
-                <div class="privacy-highlight">
-                    <p data-lang="lastUpdated">Последнее обновление: 18 октября 2025 года</p>
+                <div class="privacy-section glass-card fade-in">
+                    <h2><i class="fas fa-edit"></i> <span data-lang="policyChanges">Изменения в политике конфиденциальности</span></h2>
+                    <p data-lang="policyChangesText1">Мы можем периодически обновлять эту политику конфиденциальности. О любых изменениях мы будем уведомлять через:</p>
+                    <ul class="feature-list">
+                        <li><i class="fas fa-globe"></i> <span data-lang="policyChanges1">Официальный сайт BlockChat</span></li>
+                        <li><i class="fas fa-code-branch"></i> <span data-lang="policyChanges2">Релиз-ноты новых версий приложения</span></li>
+                        <li><i class="fas fa-bell"></i> <span data-lang="policyChanges3">Уведомления в самом приложении</span></li>
+                    </ul>
+                    <p data-lang="policyChangesText2">Продолжение использования BlockChat после внесения изменений означает ваше согласие с обновленной политикой конфиденциальности.</p>
+                </div>
+
+                <div class="privacy-section glass-card fade-in">
+                    <div class="privacy-highlight">
+                        <i class="fas fa-calendar-alt"></i>
+                        <p data-lang="lastUpdated">Последнее обновление: 18 октября 2025 года</p>
+                    </div>
                 </div>
             </div>
         </div>
     </section>
 
     <div id="modal" class="modal">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h3 data-lang="temporarilyunavailable">Временно недоступно</h3>
-                <button class="modal-close" onclick="closeModal()">
-                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M18 6L6 18M6 6l12 12" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                    </svg>
-                </button>
+        <div class="modal-glass">
+            <div class="modal-glow"></div>
+            <div class="modal-icon-wrapper">
+                <i class="fas fa-code-branch"></i>
             </div>
-            <div class="modal-body">
-                <div class="modal-icon">
-                    <svg width="48" height="48" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" stroke="var(--warning)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                    </svg>
-                </div>
-                <p data-lang="featuredevelopment">Данная функция находится в разработке. Мы работаем над улучшением сайта и скоро добавим эту возможность.</p>
-            </div>
-            <div class="modal-footer">
-                <button data-lang="okay" class="btn btn-primary" onclick="closeModal()">Понятно</button>
-            </div>
+            <h3 class="modal-title" data-lang="temporarilyunavailable">Временно недоступно</h3>
+            <p class="modal-description" data-lang="featuredevelopment">Данная функция находится в разработке. Мы работаем над улучшением сайта и скоро добавим эту возможность.</p>
+            <button class="modal-close-btn" onclick="closeModal()"><span data-lang="okay">Понятно</span></button>
         </div>
     </div>
 
     <footer>
         <div class="container">
             <div class="footer-content">
-                <div class="footer-column">
-                    <h3 data-lang="product">Продукт</h3>
-                    <ul class="footer-links">
-                        <li><a href="download.html" data-lang="download">Скачать</a></li>
-                        <li><a href="index.html#features" data-lang="features">Особенности</a></li>
-                        <li><a href="index.html#how-it-works" data-lang="howitworks">Как подключиться</a></li>
-                        <li><a href="index.html#backlog" data-lang="backlog">Бэклог</a></li>
-                    </ul>
+                <div>
+                    <h3>BlockChat</h3>
+                    <p data-lang="rightsreserved">© 2025 - 2026 BlockChat. Все права защищены.</p>
                 </div>
-                <div class="footer-column">
-                    <h3 data-lang="support">Поддержка</h3>
-                    <ul class="footer-links">
-                        <li><a href="https://github.com/bereznyak72/blockchat-releases/issues/new?template=bug_report.md" target="_blank" class="disabled-link-modal" data-lang="report">Сообщить об ошибке</a></li>
-                        <li><a href="https://github.com/bereznyak72/blockchat-releases/issues/new?template=feature_request.md" target="_blank" class="disabled-link-modal" data-lang="request">Запросить функцию</a></li>
-                    </ul>
+                <div class="footer-links">
+                    <h4 data-lang="product">Продукт</h4>
+                    <a href="download.html" data-lang="download">Скачать</a>
+                    <a href="index.html#features" data-lang="features">Особенности</a>
+                    <a href="index.html#how-it-works" data-lang="howitworks">Как подключиться</a>
                 </div>
-                <div class="footer-column">
-                    <h3 data-lang="community">Сообщество</h3>
-                    <ul class="footer-links">
-                        <li><a href="blogs.html" data-lang="BlogFooter">Блог</a></li>
-                        <li><a href="download.html#version-history" data-lang="ReleaseFooter">Релизы</a></li>
-                    </ul>
+                <div class="footer-links">
+                    <h4 data-lang="support">Поддержка</h4>
+                    <a href="#" id="reportLink" data-lang="report">Сообщить об ошибке</a>
+                    <a href="#" id="requestLink" data-lang="request">Запросить функцию</a>
                 </div>
-                <div class="footer-column">
-                    <h3 data-lang="LegalInf">Правовая информация</h3>
-                    <ul class="footer-links">
-                        <li><a href="privacy.html" data-lang="LegalPol">Политика конфиденциальности</a></li>
-                    </ul>
+                <div class="footer-links">
+                    <h4 data-lang="community">Сообщество</h4>
+                    <a href="blogs.html" data-lang="blogs">Блог</a>
+                    <a href="download.html#version-history" data-lang="ReleaseFooter">Релизы</a>
                 </div>
-            </div>
-            <div class="footer-bottom">
-                <p data-lang="rightsreserved">© 2025 - 2026 BlockChat. Все права защищены. | Разработано для приватного общения</p>
+                <div class="footer-links">
+                    <h4 data-lang="LegalInf">Правовая информация</h4>
+                    <a href="privacy.html" data-lang="LegalPol">Политика конфиденциальности</a>
+                </div>
             </div>
         </div>
     </footer>
 
     <script>
-        // Переводы для страницы политики конфиденциальности
+        const canvas = document.getElementById('particleCanvas');
+        const ctx = canvas.getContext('2d');
+        let particles = [];
+        function resizeCanvas() {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        }
+        window.addEventListener('resize', resizeCanvas);
+        resizeCanvas();
+        for (let i = 0; i < 60; i++) {
+            particles.push({
+                x: Math.random() * canvas.width,
+                y: Math.random() * canvas.height,
+                radius: Math.random() * 2 + 1,
+                alpha: Math.random() * 0.4,
+                speedX: (Math.random() - 0.5) * 0.2,
+                speedY: (Math.random() - 0.5) * 0.2
+            });
+        }
+        function animateParticles() {
+            if (!ctx) return;
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            particles.forEach(p => {
+                p.x += p.speedX;
+                p.y += p.speedY;
+                if (p.x < 0) p.x = canvas.width;
+                if (p.x > canvas.width) p.x = 0;
+                if (p.y < 0) p.y = canvas.height;
+                if (p.y > canvas.height) p.y = 0;
+                ctx.beginPath();
+                ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
+                ctx.fillStyle = `rgba(0, 102, 255, ${p.alpha * 0.5})`;
+                ctx.fill();
+            });
+            requestAnimationFrame(animateParticles);
+        }
+        animateParticles();
+
+        const burgerMenu = document.getElementById('burgerMenu');
+        const mobileNav = document.getElementById('mobileNav');
+        const overlayMenu = document.getElementById('overlay');
+        function closeMenu() {
+            mobileNav.classList.remove('open');
+            overlayMenu.classList.remove('show');
+            document.body.style.overflow = '';
+            const lines = document.querySelectorAll('.burger-line');
+            if (lines[0]) lines[0].style.transform = 'none';
+            if (lines[1]) lines[1].style.opacity = '1';
+            if (lines[2]) lines[2].style.transform = 'none';
+        }
+        function openMenu() {
+            mobileNav.classList.add('open');
+            overlayMenu.classList.add('show');
+            document.body.style.overflow = 'hidden';
+            const lines = document.querySelectorAll('.burger-line');
+            if (lines[0]) lines[0].style.transform = 'rotate(45deg) translate(5px, 5px)';
+            if (lines[1]) lines[1].style.opacity = '0';
+            if (lines[2]) lines[2].style.transform = 'rotate(-45deg) translate(5px, -5px)';
+        }
+        if (burgerMenu) {
+            burgerMenu.addEventListener('click', () => {
+                if (mobileNav.classList.contains('open')) closeMenu();
+                else openMenu();
+            });
+        }
+        if (overlayMenu) overlayMenu.addEventListener('click', closeMenu);
+        document.querySelectorAll('.mobile-nav .nav-link').forEach(link => link.addEventListener('click', closeMenu));
+
         const translations = {
+            ru: {
+                privacyTitle: "Политика конфиденциальности - BlockChat",
+                home: "Главная",
+                blogs: "Блог",
+                download: "Скачать",
+                privacyHeader: "Политика конфиденциальности",
+                privacySubheader: "Узнайте, как BlockChat защищает вашу приватность и обеспечивает безопасность ваших сообщений",
+                privacyPrinciples: "Принципы конфиденциальности BlockChat",
+                privacyPrinciplesText: "BlockChat — это децентрализованный P2P мессенджер с системой BlockChat ID, созданный с принципом полной приватности пользователей. В отличие от традиционных мессенджеров, мы обеспечиваем безопасное общение через уникальные идентификаторы без хранения личных данных.",
+                privacyHighlight1: "BlockChat использует систему BlockChat ID для идентификации пользователей. Ваши сообщения передаются напрямую между устройствами через зашифрованные P2P соединения после установки связи через сервер BlockChat ID.",
+                dataWeCollect: "Какие данные мы собираем для работы BlockChat ID",
+                dataWeCollectText: "Для обеспечения работы системы BlockChat ID мы временно храним:",
+                collect1: "BlockChat ID (уникальный идентификатор пользователя)",
+                collect2: "Никнейм пользователя (отображаемое имя)",
+                collect3: "Публичный ключ шифрования",
+                collect4: "IP-адрес (только для установки P2P соединения)",
+                collect5: "Информацию о созданных чатах и их участниках",
+                dataWeCollectText2: "Эти данные необходимы для функционирования системы идентификации и подключения пользователей. Они хранятся только во время активности пользователя в системе.",
+                dataWeDontCollect: "Какие данные мы НЕ собираем",
+                dataWeDontCollectText: "В отличие от большинства мессенджеров, BlockChat сознательно не собирает:",
+                dontCollect1: "Персональные данные (имя, email, номер телефона)",
+                dontCollect2: "Контакты из вашей адресной книги",
+                dontCollect3: "Содержание сообщений и переписки",
+                dontCollect4: "Метаданные сообщений (время отправки, содержимое)",
+                dontCollect5: "Геолокационные данные",
+                dontCollect6: "Информацию об устройствах в сети",
+                dontCollect7: "Файлы, передаваемые между пользователями",
+                dontCollect8: "Историю подключений к чатам",
+                privacyHighlight2: "Ваши сообщения и файлы никогда не проходят через наши серверы и не хранятся в каком-либо централизованном хранилище. Они существуют только на устройствах отправителя и получателя после установки P2P соединения.",
+                technicalImplementation: "Техническая реализация приватности",
+                technicalImplementationText: "BlockChat использует следующие технологии для обеспечения приватности:",
+                blockchatidSystem: "Система BlockChat ID",
+                blockchatidSystemText: "Централизованный сервер управляет уникальными идентификаторами пользователей и чатами, но не имеет доступа к содержимому сообщений.",
+                p2pArchitecture: "P2P Архитектура",
+                p2pArchitectureText: "После установления связи через BlockChat ID, приложение создает прямое соединение между устройствами пользователей без промежуточных серверов для передачи данных.",
+                signalingServer: "Сервер BlockChat ID",
+                signalingServerText: "Сервер используется только для регистрации пользователей, создания чатов и установления первоначального контакта между участниками. Он не участвует в передаче сообщений.",
+                encryptionSecurity: "Шифрование и безопасность",
+                encryptionSecurityText: "BlockChat использует современные методы шифрования для защиты ваших данных:",
+                e2eEncryption: "Сквозное шифрование",
+                e2eEncryptionText: "Все сообщения и файлы шифруются на устройстве отправителя и расшифровываются только на устройстве получателя.",
+                keyManagement: "Управление ключами",
+                keyManagementText: "Каждый пользователь имеет пару криптографических ключей. Публичный ключ хранится на сервере BlockChat ID для идентификации, приватный ключ хранится только на устройстве пользователя.",
+                chatSecurity: "Безопасность чатов",
+                chatSecurityText: "6-значные коды чатов генерируются случайным образом и используются только для подключения участников. Сервер BlockChat ID не имеет доступа к содержимому чатов.",
+                dataStorage: "Хранение данных",
+                dataStorageText: "BlockChat обеспечивает защищенное хранение данных:",
+                storage1: "История сообщений хранится только на вашем устройстве",
+                storage2: "BlockChat ID и настройки сохраняются локально",
+                storage3: "Приватные ключи никогда не покидают ваше устройство",
+                storage4: "Сервер BlockChat ID хранит только информацию, необходимую для идентификации и подключения",
+                storage5: "При удалении аккаунта все данные немедленно удаляются с сервера",
+                userControl: "Контроль пользователя",
+                userControlText: "Вы имеете полный контроль над своими данными:",
+                accountManagement: "Управление аккаунтом",
+                accountManagementText: "Вы можете в любой момент изменить никнейм, просмотреть свой BlockChat ID или полностью удалить аккаунт через настройки приложения.",
+                dataExport: "Экспорт данных",
+                dataExportText: "Вся ваша история сообщений хранится локально и может быть просмотрена только через приложение BlockChat.",
+                chatManagement: "Управление чатами",
+                chatManagementText: "Вы можете создавать чаты, присоединяться к ним по кодам и покидать чаты в любое время.",
+                thirdPartyServices: "Сторонние услуги и интеграции",
+                thirdPartyServicesText1: "BlockChat не использует сторонние аналитические сервисы, рекламные сети или трекеры, которые могли бы собирать ваши данные.",
+                thirdPartyServicesText2: "Единственное исключение — службы распространения приложений (такие как GitHub Releases), которые могут собирать анонимную статистику загрузок в соответствии со своими политиками конфиденциальности.",
+                updatesSupport: "Обновления и поддержка",
+                updatesSupportText1: "Приложение проверяет наличие обновлений через официальный сайт BlockChat. При проверке передается только номер версии вашего приложения.",
+                updatesSupportText2: "Сообщения об ошибках и запросы функций отправляются добровольно через GitHub Issues и содержат только информацию, которую вы явно указали в отчете.",
+                policyChanges: "Изменения в политике конфиденциальности",
+                policyChangesText1: "Мы можем периодически обновлять эту политику конфиденциальности. О любых изменениях мы будем уведомлять через:",
+                policyChanges1: "Официальный сайт BlockChat",
+                policyChanges2: "Релиз-ноты новых версий приложения",
+                policyChanges3: "Уведомления в самом приложении",
+                policyChangesText2: "Продолжение использования BlockChat после внесения изменений означает ваше согласие с обновленной политикой конфиденциальности.",
+                lastUpdated: "Последнее обновление: 18 октября 2025 года",
+                product: "Продукт",
+                features: "Особенности",
+                howitworks: "Как подключиться",
+                support: "Поддержка",
+                report: "Сообщить об ошибке",
+                request: "Запросить функцию",
+                community: "Сообщество",
+                LegalInf: "Правовая информация",
+                LegalPol: "Политика конфиденциальности",
+                rightsreserved: "© 2025 - 2026 BlockChat. Все права защищены.",
+                temporarilyunavailable: "Временно недоступно",
+                featuredevelopment: "Данная функция находится в разработке. Мы работаем над улучшением сайта и скоро добавим эту возможность.",
+                okay: "Понятно",
+                ReleaseFooter: "Релизы"
+            },
             en: {
                 privacyTitle: "Privacy Policy - BlockChat",
+                home: "Home",
+                blogs: "Blog",
+                download: "Download",
                 privacyHeader: "Privacy Policy",
                 privacySubheader: "Learn how BlockChat protects your privacy and ensures the security of your messages",
-                home: "Home",
                 privacyPrinciples: "BlockChat Privacy Principles",
                 privacyPrinciplesText: "BlockChat is a decentralized P2P messenger with BlockChat ID system, built on the principle of complete user privacy. Unlike traditional messengers, we provide secure communication through unique identifiers without storing personal data.",
                 privacyHighlight1: "BlockChat uses the BlockChat ID system to identify users. Your messages are transmitted directly between devices through encrypted P2P connections after establishing connection via BlockChat ID server.",
@@ -430,283 +486,63 @@
                 product: "Product",
                 features: "Features",
                 howitworks: "How to connect",
-                backlog: "Backlog",
-                download: "Download",
                 support: "Support",
                 report: "Report an error",
                 request: "Request a feature",
                 community: "Community",
                 LegalInf: "Legal information",
                 LegalPol: "Privacy policy",
-                rightsreserved: "© 2025 - 2026 BlockChat. All rights reserved. | Designed for private communication",
+                rightsreserved: "© 2025 - 2026 BlockChat. All rights reserved.",
                 temporarilyunavailable: "Temporarily unavailable",
                 featuredevelopment: "This feature is currently under development. We are working on improving the website and will soon add this feature.",
                 okay: "Okay",
-                BlogFooter: "Blog",
                 ReleaseFooter: "Releases"
-            },
-            ru: {
-                privacyTitle: "Политика конфиденциальности - BlockChat",
-                privacyHeader: "Политика конфиденциальности",
-                privacySubheader: "Узнайте, как BlockChat защищает вашу приватность и обеспечивает безопасность ваших сообщений",
-                home: "На главную",
-                privacyPrinciples: "Принципы конфиденциальности BlockChat",
-                privacyPrinciplesText: "BlockChat — это децентрализованный P2P мессенджер с системой BlockChat ID, созданный с принципом полной приватности пользователей. В отличие от традиционных мессенджеров, мы обеспечиваем безопасное общение через уникальные идентификаторы без хранения личных данных.",
-                privacyHighlight1: "BlockChat использует систему BlockChat ID для идентификации пользователей. Ваши сообщения передаются напрямую между устройствами через зашифрованные P2P соединения после установки связи через сервер BlockChat ID.",
-                dataWeCollect: "Какие данные мы собираем для работы BlockChat ID",
-                dataWeCollectText: "Для обеспечения работы системы BlockChat ID мы временно храним:",
-                collect1: "BlockChat ID (уникальный идентификатор пользователя)",
-                collect2: "Никнейм пользователя (отображаемое имя)",
-                collect3: "Публичный ключ шифрования",
-                collect4: "IP-адрес (только для установки P2P соединения)",
-                collect5: "Информацию о созданных чатах и их участниках",
-                dataWeCollectText2: "Эти данные необходимы для функционирования системы идентификации и подключения пользователей. Они хранятся только во время активности пользователя в системе.",
-                dataWeDontCollect: "Какие данные мы НЕ собираем",
-                dataWeDontCollectText: "В отличие от большинства мессенджеров, BlockChat сознательно не собирает:",
-                dontCollect1: "Персональные данные (имя, email, номер телефона)",
-                dontCollect2: "Контакты из вашей адресной книги",
-                dontCollect3: "Содержание сообщений и переписки",
-                dontCollect4: "Метаданные сообщений (время отправки, содержимое)",
-                dontCollect5: "Геолокационные данные",
-                dontCollect6: "Информацию об устройствах в сети",
-                dontCollect7: "Файлы, передаваемые между пользователями",
-                dontCollect8: "Историю подключений к чатам",
-                privacyHighlight2: "Ваши сообщения и файлы никогда не проходят через наши серверы и не хранятся в каком-либо централизованном хранилище. Они существуют только на устройствах отправителя и получателя после установки P2P соединения.",
-                technicalImplementation: "Техническая реализация приватности",
-                technicalImplementationText: "BlockChat использует следующие технологии для обеспечения приватности:",
-                blockchatidSystem: "Система BlockChat ID",
-                blockchatidSystemText: "Централизованный сервер управляет уникальными идентификаторами пользователей и чатами, но не имеет доступа к содержимому сообщений.",
-                p2pArchitecture: "P2P Архитектура",
-                p2pArchitectureText: "После установления связи через BlockChat ID, приложение создает прямое соединение между устройствами пользователей без промежуточных серверов для передачи данных.",
-                signalingServer: "Сервер BlockChat ID",
-                signalingServerText: "Сервер используется только для регистрации пользователей, создания чатов и установления первоначального контакта между участниками. Он не участвует в передаче сообщений.",
-                encryptionSecurity: "Шифрование и безопасность",
-                encryptionSecurityText: "BlockChat использует современные методы шифрования для защиты ваших данных:",
-                e2eEncryption: "Сквозное шифрование (End-to-End Encryption)",
-                e2eEncryptionText: "Все сообщения и файлы шифруются на устройстве отправителя и расшифровываются только на устройстве получателя.",
-                keyManagement: "Управление ключами",
-                keyManagementText: "Каждый пользователь имеет пару криптографических ключей. Публичный ключ хранится на сервере BlockChat ID для идентификации, приватный ключ хранится только на устройстве пользователя.",
-                chatSecurity: "Безопасность чатов",
-                chatSecurityText: "6-значные коды чатов генерируются случайным образом и используются только для подключения участников. Сервер BlockChat ID не имеет доступа к содержимому чатов.",
-                dataStorage: "Хранение данных",
-                dataStorageText: "BlockChat обеспечивает защищенное хранение данных:",
-                storage1: "История сообщений хранится только на вашем устройстве",
-                storage2: "BlockChat ID и настройки сохраняются локально",
-                storage3: "Приватные ключи никогда не покидают ваше устройство",
-                storage4: "Сервер BlockChat ID хранит только информацию, необходимую для идентификации и подключения",
-                storage5: "При удалении аккаунта все данные немедленно удаляются с сервера",
-                userControl: "Контроль пользователя",
-                userControlText: "Вы имеете полный контроль над своими данными:",
-                accountManagement: "Управление аккаунтом",
-                accountManagementText: "Вы можете в любой момент изменить никнейм, просмотреть свой BlockChat ID или полностью удалить аккаунт через настройки приложения.",
-                dataExport: "Экспорт данных",
-                dataExportText: "Вся ваша история сообщений хранится локально и может быть просмотрена только через приложение BlockChat.",
-                chatManagement: "Управление чатами",
-                chatManagementText: "Вы можете создавать чаты, присоединяться к ним по кодам и покидать чаты в любое время.",
-                thirdPartyServices: "Сторонние услуги и интеграции",
-                thirdPartyServicesText1: "BlockChat не использует сторонние аналитические сервисы, рекламные сети или трекеры, которые могли бы собирать ваши данные.",
-                thirdPartyServicesText2: "Единственное исключение — службы распространения приложений (такие как GitHub Releases), которые могут собирать анонимную статистику загрузок в соответствии со своими политиками конфиденциальности.",
-                updatesSupport: "Обновления и поддержка",
-                updatesSupportText1: "Приложение проверяет наличие обновлений через официальный сайт BlockChat. При проверке передается только номер версии вашего приложения.",
-                updatesSupportText2: "Сообщения об ошибках и запросы функций отправляются добровольно через GitHub Issues и содержат только информацию, которую вы явно указали в отчете.",
-                policyChanges: "Изменения в политике конфиденциальности",
-                policyChangesText1: "Мы можем периодически обновлять эту политику конфиденциальности. О любых изменениях мы будем уведомлять через:",
-                policyChanges1: "Официальный сайт BlockChat",
-                policyChanges2: "Релиз-ноты новых версий приложения",
-                policyChanges3: "Уведомления в самом приложении",
-                policyChangesText2: "Продолжение использования BlockChat после внесения изменений означает ваше согласие с обновленной политикой конфиденциальности.",
-                lastUpdated: "Последнее обновление: 18 октября 2025 года",
-                product: "Продукт",
-                features: "Особенности",
-                howitworks: "Как подключиться",
-                backlog: "Бэклог",
-                download: "Скачать",
-                support: "Поддержка",
-                report: "Сообщить об ошибке",
-                request: "Запросить функцию",
-                community: "Сообщество",
-                LegalInf: "Правовая информация",
-                LegalPol: "Политика конфиденциальности",
-                rightsreserved: "© 2025 - 2026 BlockChat. Все права защищены. | Разработано для приватного общения",
-                temporarilyunavailable: "Временно недоступно",
-                featuredevelopment: "Данная функция находится в разработке. Мы работаем над улучшением сайта и скоро добавим эту возможность.",
-                okay: "Понятно",
-                BlogFooter: "Блог",
-                ReleaseFooter: "Релизы"
             }
         };
 
-        // Функция смены языка
-        function changeLanguage(lang) {
-            localStorage.setItem('lang', lang);
-            
-            document.title = getTranslation('privacyTitle');
-            
+        let currentLang = localStorage.getItem('privacyLang') || 'ru';
+        function updateLanguage() {
             document.querySelectorAll('[data-lang]').forEach(el => {
                 const key = el.getAttribute('data-lang');
-                if (translations[lang] && translations[lang][key]) {
-                    el.textContent = translations[lang][key];
+                if (translations[currentLang][key]) {
+                    el.textContent = translations[currentLang][key];
                 }
             });
-
-            document.querySelectorAll('.mobile-lang-btn').forEach(btn => {
-                btn.classList.toggle('active', btn.dataset.lang === lang);
-            });
-
-            const langToggle = document.getElementById('langToggle');
-            if (langToggle) {
-                langToggle.checked = lang === 'en';
-            }
+            document.title = translations[currentLang].privacyTitle;
+            const langBtns = document.querySelectorAll('#langToggle, #mobileLangToggle');
+            langBtns.forEach(btn => { if (btn) btn.textContent = currentLang.toUpperCase(); });
+            localStorage.setItem('privacyLang', currentLang);
         }
+        document.getElementById('langToggle')?.addEventListener('click', () => {
+            currentLang = currentLang === 'ru' ? 'en' : 'ru';
+            updateLanguage();
+        });
+        document.getElementById('mobileLangToggle')?.addEventListener('click', () => {
+            currentLang = currentLang === 'ru' ? 'en' : 'ru';
+            updateLanguage();
+        });
+        updateLanguage();
 
-        // Получение перевода по ключу
-        function getTranslation(key) {
-            const currentLang = localStorage.getItem('lang') || 'ru';
-            return translations[currentLang][key] || key;
-        }
-
-        // Инициализация темы
-        function initTheme() {
-            const savedTheme = localStorage.getItem('theme') || 'dark';
-            document.documentElement.setAttribute('data-theme', savedTheme);
-            
-            document.querySelectorAll('.mobile-theme-btn').forEach(btn => {
-                btn.classList.toggle('active', btn.dataset.theme === savedTheme);
-            });
-            
-            const themeToggle = document.getElementById('themeToggle');
-            if (themeToggle) {
-                themeToggle.addEventListener('click', () => {
-                    const currentTheme = document.documentElement.getAttribute('data-theme');
-                    const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
-                    
-                    document.documentElement.setAttribute('data-theme', newTheme);
-                    localStorage.setItem('theme', newTheme);
-                    
-                    document.querySelectorAll('.mobile-theme-btn').forEach(btn => {
-                        btn.classList.toggle('active', btn.dataset.theme === newTheme);
-                    });
-                });
-            }
-        }
-        
-        // Инициализация переключателя языка
-        function initLanguageToggle() {
-            const langToggle = document.getElementById('langToggle');
-            if (!langToggle) return;
-            
-            const savedLang = localStorage.getItem('lang') || 'ru';
-            langToggle.checked = savedLang === 'en';
-            
-            langToggle.addEventListener('change', function() {
-                const newLang = this.checked ? 'en' : 'ru';
-                changeLanguage(newLang);
-            });
-        }
-
-        function initMobileControls() {
-            document.querySelectorAll('.mobile-lang-btn').forEach(btn => {
-                btn.addEventListener('click', function() {
-                    const lang = this.dataset.lang;
-                    changeLanguage(lang);
-                });
-            });
-
-            document.querySelectorAll('.mobile-theme-btn').forEach(btn => {
-                btn.addEventListener('click', function() {
-                    const theme = this.dataset.theme;
-                    document.documentElement.setAttribute('data-theme', theme);
-                    localStorage.setItem('theme', theme);
-                    
-                    document.querySelectorAll('.mobile-theme-btn').forEach(b => {
-                        b.classList.toggle('active', b.dataset.theme === theme);
-                    });
-                });
-            });
-        }
-
-        function initBurgerMenu() {
-            const burger = document.getElementById('burgerMenu');
-            const menu = document.getElementById('mobileMenu');
-            const overlay = document.getElementById('mobileOverlay');
-            const closeBtn = document.getElementById('menuClose');
-            
-            if (!burger || !menu || !overlay || !closeBtn) return;
-            
-            function openMenu() {
-                burger.classList.add('hidden');
-                menu.classList.add('active');
-                overlay.classList.add('active');
-                document.body.style.overflow = 'hidden';
-            }
-            
-            function closeMenu() {
-                burger.classList.remove('hidden');
-                menu.classList.remove('active');
-                overlay.classList.remove('active');
-                document.body.style.overflow = 'auto';
-            }
-            
-            burger.addEventListener('click', openMenu);
-            closeBtn.addEventListener('click', closeMenu);
-            overlay.addEventListener('click', closeMenu);
-            
-            document.querySelectorAll('.mobile-nav-link').forEach(link => {
-                link.addEventListener('click', closeMenu);
-            });
-            
-            document.addEventListener('keydown', (e) => {
-                if (e.key === 'Escape' && menu.classList.contains('active')) {
-                    closeMenu();
-                }
-            });
-        }
-
-        // Запуск модального окна
+        const modal = document.getElementById('modal');
         function showModal() {
-            const modal = document.getElementById('modal');
             modal.classList.add('show');
             document.body.style.overflow = 'hidden';
         }
-
-        // Закрытие модального окна
-        function closeModal() {
-            const modal = document.getElementById('modal');
+        window.closeModal = () => {
             modal.classList.remove('show');
-            document.body.style.overflow = 'auto';
-        }
-
-        document.addEventListener('DOMContentLoaded', function() {
-            initTheme();
-            initLanguageToggle();
-            initMobileControls();
-            initBurgerMenu();
-            
-            const savedLang = localStorage.getItem('lang') || 'ru';
-            changeLanguage(savedLang);
-
-            document.querySelectorAll('.disabled-link-modal').forEach(link => {
-                link.addEventListener('click', function (e) {
-                    e.preventDefault();
-                    showModal();
-                });
-            });
-
-            document.getElementById('modal').addEventListener('click', function (e) {
-                if (e.target === this) {
-                    closeModal();
-                }
-            });
-
-            document.addEventListener('keydown', function (e) {
-                if (e.key === 'Escape') {
-                    closeModal();
-                }
-            });
+            document.body.style.overflow = '';
+        };
+        modal?.addEventListener('click', (e) => { if (e.target === modal) closeModal(); });
+        document.addEventListener('keydown', (e) => { if (e.key === 'Escape' && modal.classList.contains('show')) closeModal(); });
+        document.querySelectorAll('#reportLink, #requestLink').forEach(btn => {
+            btn?.addEventListener('click', (e) => { e.preventDefault(); showModal(); });
         });
 
-        window.showModal = showModal;
-        window.closeModal = closeModal;
+        const fadeElements = document.querySelectorAll('.fade-in');
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+        }, { threshold: 0.1 });
+        fadeElements.forEach(el => observer.observe(el));
     </script>
 </body>
 </html>

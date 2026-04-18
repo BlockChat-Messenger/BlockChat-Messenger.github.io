@@ -2,50 +2,44 @@
 <html lang="ru" data-theme="dark">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
     <title data-lang="blogTitle">Блог - BlockChat: Новости и статьи о P2P технологиях</title>
-    <link rel="shortcut icon" href="images/icon.png">
+    <link rel="shortcut icon" href="images/icon-white.png">
     <meta name="description" content="Читайте последние новости BlockChat, технические статьи о P2P технологиях и руководства по использованию мессенджера.">
     <meta name="keywords" content="BlockChat, блог, P2P, WebRTC, безопасность, приватность, мессенджер, новости, BlockLink">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700;14..32,800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <link rel="stylesheet" href="css/blogs.css">
 </head>
 <body>
-    <div class="container">
-        <nav>
+    <div class="animated-gradient-bg"></div>
+    <canvas id="particleCanvas" class="floating-particles"></canvas>
+
+    <nav>
+        <div class="nav-container">
             <div class="logo">
-                <div class="logo-icon">
-                    <img src="images/logo-white.png" width="30px"/>
-                </div>
+                <div class="logo-icon"><img src="images/icon-white.png" width="23px" style="filter: brightness(0) invert(1);" /></div>
                 <a href="index.html">BlockChat</a>
             </div>
             <div class="nav-links">
                 <a href="index.html" class="nav-link" data-lang="home">Главная</a>
                 <a href="download.html" class="nav-link" data-lang="download">Скачать</a>
-                <div class="language-switch">
-                    <label class="switch">
-                        <input type="checkbox" id="langToggle">
-                        <span class="slider">
-                            <span class="lang-text ru">RU</span>
-                            <span class="lang-text en">EN</span>
-                        </span>
-                    </label>
-                </div>
-                <button class="theme-toggle" id="themeToggle" aria-label="Переключить тему">
-                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M12 16C14.2091 16 16 14.2091 16 12C16 9.79086 14.2091 8 12 8C9.79086 8 8 9.79086 8 12C8 14.2091 9.79086 16 12 16Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
-                        <path d="M12 2V4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
-                        <path d="M12 20V22" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
-                        <path d="M4.93 4.93L6.34 6.34" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
-                        <path d="M17.66 17.66L19.07 19.07" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
-                        <path d="M2 12H4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
-                        <path d="M20 12H22" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
-                        <path d="M6.34 17.66L4.93 19.07" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
-                        <path d="M19.07 4.93L17.66 6.34" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
-                    </svg>
-                </button>
+                <button id="langToggle" class="lang-switch">RU</button>
             </div>
-        </nav>
+            <div class="burger-menu" id="burgerMenu">
+                <div class="burger-line"></div>
+                <div class="burger-line"></div>
+                <div class="burger-line"></div>
+            </div>
+        </div>
+    </nav>
+
+    <div class="mobile-nav" id="mobileNav">
+        <a href="index.html" class="nav-link" data-lang="home">Главная</a>
+        <a href="download.html" class="nav-link" data-lang="download">Скачать</a>
+        <button id="mobileLangToggle" class="lang-switch" style="width: 100%; justify-content: center;">RU</button>
     </div>
+    <div class="overlay" id="overlay"></div>
 
     <section class="blog-hero">
         <div class="container">
@@ -53,11 +47,11 @@
             <p data-lang="blogSubheader">Новости, технические статьи и руководства по использованию P2P мессенджера</p>
             
             <div class="blog-filters">
-                <button class="filter-btn active" data-filter="all" data-lang="filterAll">Все статьи</button>
-                <button class="filter-btn" data-filter="technical" data-lang="filterTechnical">Технические</button>
-                <button class="filter-btn" data-filter="news" data-lang="filterNews">Новости</button>
-                <button class="filter-btn" data-filter="educational" data-lang="filterEducational">Образовательные</button>
-                <button class="filter-btn" data-filter="tutorials" data-lang="filterTutorials">Инструкции</button>
+                <button class="filter-btn active" data-filter="all" data-lang="filterAll"><i class="fas fa-newspaper"></i> Все статьи</button>
+                <button class="filter-btn" data-filter="technical" data-lang="filterTechnical"><i class="fas fa-microchip"></i> Технические</button>
+                <button class="filter-btn" data-filter="news" data-lang="filterNews"><i class="fas fa-bullhorn"></i> Новости</button>
+                <button class="filter-btn" data-filter="educational" data-lang="filterEducational"><i class="fas fa-graduation-cap"></i> Образовательные</button>
+                <button class="filter-btn" data-filter="tutorials" data-lang="filterTutorials"><i class="fas fa-book-open"></i> Инструкции</button>
             </div>
         </div>
     </section>
@@ -65,121 +59,111 @@
     <section class="blog-posts">
         <div class="container">
             <div class="blog-grid">
-                <!-- BlockLink -->
-                <article class="blog-card" data-category="news technical">
+                <article class="blog-card glass-card fade-in" data-category="news technical">
                     <div class="blog-card-image">
                         <img src="images/blocklink-post.png" alt="BlockLink - виртуальные сети">
+                        <span class="blog-card-category" data-lang="categoryNews">Новости</span>
                     </div>
                     <div class="blog-card-content">
-                        <div class="blog-card-date" data-lang="date7">6 марта 2026</div>
+                        <div class="blog-card-date"><i class="far fa-calendar-alt"></i> <span data-lang="date7">6 марта 2026</span></div>
                         <h3 class="blog-card-title" data-lang="article7Title">BlockLink: виртуальные сети для приватного общения</h3>
                         <p class="blog-card-excerpt" data-lang="article7Excerpt">Знакомьтесь: BlockLink — технология создания изолированных виртуальных сетей для каждого чата. Прямое P2P-соединение без настроек роутера.</p>
                         <div class="blog-card-footer">
                             <div class="blog-card-author">
-                                <img src="https://bereznyak72.github.io/img/logo.png" alt="nizi52" class="author-avatar">
-                                <a href="https://bereznyak72.github.io/" target="_blank">bereznyak72</a>
+                                <img src="https://bereznyak72.github.io/img/logo.png" alt="bereznyak72" class="author-avatar">
+                                <span>bereznyak72</span>
                             </div>
                             <a href="posts/blocklink-announce.html" class="blog-card-link">
                                 <span data-lang="readMore">Читать</span>
-                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                    <path d="M5 12H19M19 12L12 5M19 12L12 19" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                                </svg>
+                                <i class="fas fa-arrow-right"></i>
                             </a>
                         </div>
                     </div>
                 </article>
 
-                <!-- NAT и P2P -->
-                <article class="blog-card" data-category="technical educational">
+                <article class="blog-card glass-card fade-in" data-category="technical educational">
                     <div class="blog-card-image">
                         <img src="images/nat-problem.png" alt="Проблема NAT в P2P">
+                        <span class="blog-card-category" data-lang="categoryTechnical">Технические</span>
                     </div>
                     <div class="blog-card-content">
-                        <div class="blog-card-date" data-lang="date6">6 марта 2026</div>
+                        <div class="blog-card-date"><i class="far fa-calendar-alt"></i> <span data-lang="date6">6 марта 2026</span></div>
                         <h3 class="blog-card-title" data-lang="article6Title">Как P2P-мессенджеры находят друг друга за роутерами?</h3>
                         <p class="blog-card-excerpt" data-lang="article6Excerpt">Разбираемся, как P2P-мессенджеры обходят NAT и файрволы: от проброса портов до VPN-сетей. И представляем наше решение — BlockLink.</p>
                         <div class="blog-card-footer">
                             <div class="blog-card-author">
                                 <img src="https://nizi52.github.io/image/profile.png" alt="nizi52" class="author-avatar">
-                                <a href="https://nizi52.github.io/" target="_blank">nizi52</a>
+                                <span>nizi52</span>
                             </div>
                             <a href="posts/nat-problem.html" class="blog-card-link">
                                 <span data-lang="readMore">Читать</span>
-                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                    <path d="M5 12H19M19 12L12 5M19 12L12 19" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                                </svg>
+                                <i class="fas fa-arrow-right"></i>
                             </a>
                         </div>
                     </div>
                 </article>
 
-                <!-- Федеративные серверы -->
-                <article class="blog-card" data-category="educational">
+                <article class="blog-card glass-card fade-in" data-category="educational">
                     <div class="blog-card-image">
                         <img src="images/federation-post.png" alt="Федеративные серверы">
+                        <span class="blog-card-category" data-lang="categoryEducational">Образовательные</span>
                     </div>
                     <div class="blog-card-content">
-                        <div class="blog-card-date" data-lang="date5">28 сентября 2025</div>
+                        <div class="blog-card-date"><i class="far fa-calendar-alt"></i> <span data-lang="date5">28 сентября 2025</span></div>
                         <h3 class="blog-card-title" data-lang="article5Title">Федеративные серверы (Federation): что это и где используется?</h3>
                         <p class="blog-card-excerpt" data-lang="article5Excerpt">Узнайте, что такое федеративные серверы, как они работают в таких мессенджерах, как Matrix и Mastodon, и чем они отличаются от чистой P2P архитектуры BlockChat.</p>
                         <div class="blog-card-footer">
                             <div class="blog-card-author">
                                 <img src="https://nizi52.github.io/image/profile.png" alt="nizi52" class="author-avatar">
-                                <a href="https://nizi52.github.io/" target="_blank">nizi52</a>
+                                <span>nizi52</span>
                             </div>
                             <a href="posts/federation-post.html" class="blog-card-link">
                                 <span data-lang="readMore">Читать</span>
-                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                    <path d="M5 12H19M19 12L12 5M19 12L12 19" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                                </svg>
+                                <i class="fas fa-arrow-right"></i>
                             </a>
                         </div>
                     </div>
                 </article>
 
-                <!-- Блокчейн -->
-                <article class="blog-card" data-category="educational">
+                <article class="blog-card glass-card fade-in" data-category="educational">
                     <div class="blog-card-image">
                         <img src="images/blockchain-post.png" alt="Блокчейн технология">
+                        <span class="blog-card-category" data-lang="categoryEducational">Образовательные</span>
                     </div>
                     <div class="blog-card-content">
-                        <div class="blog-card-date" data-lang="date4">25 сентября 2025</div>
+                        <div class="blog-card-date"><i class="far fa-calendar-alt"></i> <span data-lang="date4">25 сентября 2025</span></div>
                         <h3 class="blog-card-title" data-lang="article4Title">Блокчейн: основы технологии и её применение в P2P коммуникациях</h3>
                         <p class="blog-card-excerpt" data-lang="article4Excerpt">Узнайте, как технология блокчейн работает, почему она безопасна и как применяется в децентрализованных мессенджерах.</p>
                         <div class="blog-card-footer">
                             <div class="blog-card-author">
                                 <img src="https://nizi52.github.io/image/profile.png" alt="nizi52" class="author-avatar">
-                                <a href="https://nizi52.github.io/" target="_blank">nizi52</a>
+                                <span>nizi52</span>
                             </div>
                             <a href="posts/blockchain-post.html" class="blog-card-link">
                                 <span data-lang="readMore">Читать</span>
-                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                    <path d="M5 12H19M19 12L12 5M19 12L12 19" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                                </svg>
+                                <i class="fas fa-arrow-right"></i>
                             </a>
                         </div>
                     </div>
                 </article>
 
-                <!-- P2P основы -->
-                <article class="blog-card" data-category="educational">
+                <article class="blog-card glass-card fade-in" data-category="educational">
                     <div class="blog-card-image">
                         <img src="images/p2p-post.png" alt="Что такое P2P">
+                        <span class="blog-card-category" data-lang="categoryEducational">Образовательные</span>
                     </div>
                     <div class="blog-card-content">
-                        <div class="blog-card-date" data-lang="date3">12 сентября 2025</div>
+                        <div class="blog-card-date"><i class="far fa-calendar-alt"></i> <span data-lang="date3">12 сентября 2025</span></div>
                         <h3 class="blog-card-title" data-lang="article3Title">Что такое P2P и почему это безопасно?</h3>
                         <p class="blog-card-excerpt" data-lang="article3Excerpt">Объясняем принципы peer-to-peer технологий, их преимущества для приватности и почему они становятся будущим коммуникаций.</p>
                         <div class="blog-card-footer">
                             <div class="blog-card-author">
                                 <img src="https://nizi52.github.io/image/profile.png" alt="nizi52" class="author-avatar">
-                                <a href="https://nizi52.github.io/" target="_blank">nizi52</a>
+                                <span>nizi52</span>
                             </div>
                             <a href="posts/p2p-post.html" class="blog-card-link">
                                 <span data-lang="readMore">Читать</span>
-                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                    <path d="M5 12H19M19 12L12 5M19 12L12 19" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                                </svg>
+                                <i class="fas fa-arrow-right"></i>
                             </a>
                         </div>
                     </div>
@@ -189,126 +173,122 @@
     </section>
 
     <div id="modal" class="modal">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h3 data-lang="temporarilyunavailable">Временно недоступно</h3>
-          <button class="modal-close" onclick="closeModal()">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <path d="M18 6L6 18M6 6l12 12" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-            </svg>
-          </button>
+        <div class="modal-glass">
+            <div class="modal-glow"></div>
+            <div class="modal-icon-wrapper">
+                <i class="fas fa-code-branch"></i>
+            </div>
+            <h3 class="modal-title" data-lang="temporarilyunavailable">Временно недоступно</h3>
+            <p class="modal-description" data-lang="featuredevelopment">Данная функция находится в разработке. Мы работаем над улучшением сайта и скоро добавим эту возможность.</p>
+            <button class="modal-close-btn" onclick="closeModal()"><span data-lang="okay">Понятно</span></button>
         </div>
-        <div class="modal-body">
-          <div class="modal-icon">
-            <svg width="48" height="48" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <path d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" stroke="var(--warning)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-            </svg>
-          </div>
-          <p data-lang="featuredevelopment">Данная функция находится в разработке. Мы работаем над улучшением сайта и скоро добавим эту возможность.</p>
-        </div>
-        <div class="modal-footer">
-          <button data-lang="okay" class="btn btn-primary" onclick="closeModal()">Понятно</button>
-        </div>
-      </div>
     </div>
 
     <footer>
-      <div class="container">
-        <div class="footer-content">
-          <div class="footer-column">
-            <h3 data-lang="product">Продукт</h3>
-            <ul class="footer-links">
-              <li><a href="download.html" data-lang="download">Скачать</a></li>
-              <li><a href="index.html#features" data-lang="features">Особенности</a></li>
-              <li><a href="index.html#how-it-works" data-lang="howitworks">Как подключиться</a></li>
-              <li><a href="index.html#backlog" data-lang="backlog">Бэклог</a></li>
-            </ul>
-          </div>
-          <div class="footer-column">
-            <h3 data-lang="support">Поддержка</h3>
-            <ul class="footer-links">
-              <li><a href="https://github.com/bereznyak72/blockchat-releases/issues/new?template=bug_report.md" target="_blank" data-lang="report" class="disabled-link-modal">Сообщить об ошибке</a></li>
-              <li><a href="https://github.com/bereznyak72/blockchat-releases/issues/new?template=feature_request.md" target="_blank" data-lang="request" class="disabled-link-modal">Запросить функцию</a></li>
-            </ul>
-          </div>
-          <div class="footer-column">
-            <h3 data-lang="community">Сообщество</h3>
-            <ul class="footer-links">
-              <li><a href="blogs.html" data-lang="BlogFooter">Блог</a></li>
-              <li><a href="download.html#version-history" data-lang="ReleaseFooter">Релизы</a></li>
-            </ul>
-          </div>
-          <div class="footer-column">
-              <h3 data-lang="LegalInf">Правовая информация</h3>
-              <ul class="footer-links">
-                  <li><a href="privacy.html" data-lang="LegalPol">Политика конфиденциальности</a></li>
-              </ul>
-          </div>
+        <div class="container">
+            <div class="footer-content">
+                <div>
+                    <h3>BlockChat</h3>
+                    <p data-lang="rightsreserved">© 2025 - 2026 BlockChat. Все права защищены.</p>
+                </div>
+                <div class="footer-links">
+                    <h4 data-lang="product">Продукт</h4>
+                    <a href="download.html" data-lang="download">Скачать</a>
+                    <a href="index.html#features" data-lang="features">Особенности</a>
+                    <a href="index.html#how-it-works" data-lang="howitworks">Как подключиться</a>
+                </div>
+                <div class="footer-links">
+                    <h4 data-lang="support">Поддержка</h4>
+                    <a href="#" id="reportLink" data-lang="report">Сообщить об ошибке</a>
+                    <a href="#" id="requestLink" data-lang="request">Запросить функцию</a>
+                </div>
+                <div class="footer-links">
+                    <h4 data-lang="community">Сообщество</h4>
+                    <a href="blogs.html" data-lang="BlogFooter">Блог</a>
+                    <a href="download.html#version-history" data-lang="ReleaseFooter">Релизы</a>
+                </div>
+                <div class="footer-links">
+                    <h4 data-lang="LegalInf">Правовая информация</h4>
+                    <a href="privacy.html" data-lang="LegalPol">Политика конфиденциальности</a>
+                </div>
+            </div>
         </div>
-        <div class="footer-bottom">
-          <p data-lang="rightsreserved">© 2025 - 2026 BlockChat. Все права защищены. | Разработано для приватного общения</p>
-        </div>
-      </div>
     </footer>
 
     <script>
-        // Переводы для страницы блога
+        const canvas = document.getElementById('particleCanvas');
+        const ctx = canvas.getContext('2d');
+        let particles = [];
+        function resizeCanvas() {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        }
+        window.addEventListener('resize', resizeCanvas);
+        resizeCanvas();
+        for (let i = 0; i < 60; i++) {
+            particles.push({
+                x: Math.random() * canvas.width,
+                y: Math.random() * canvas.height,
+                radius: Math.random() * 2 + 1,
+                alpha: Math.random() * 0.4,
+                speedX: (Math.random() - 0.5) * 0.2,
+                speedY: (Math.random() - 0.5) * 0.2
+            });
+        }
+        function animateParticles() {
+            if (!ctx) return;
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            particles.forEach(p => {
+                p.x += p.speedX;
+                p.y += p.speedY;
+                if (p.x < 0) p.x = canvas.width;
+                if (p.x > canvas.width) p.x = 0;
+                if (p.y < 0) p.y = canvas.height;
+                if (p.y > canvas.height) p.y = 0;
+                ctx.beginPath();
+                ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
+                ctx.fillStyle = `rgba(0, 102, 255, ${p.alpha * 0.5})`;
+                ctx.fill();
+            });
+            requestAnimationFrame(animateParticles);
+        }
+        animateParticles();
+
+        const burgerMenu = document.getElementById('burgerMenu');
+        const mobileNav = document.getElementById('mobileNav');
+        const overlayMenu = document.getElementById('overlay');
+        function closeMenu() {
+            mobileNav.classList.remove('open');
+            overlayMenu.classList.remove('show');
+            document.body.style.overflow = '';
+            const lines = document.querySelectorAll('.burger-line');
+            if (lines[0]) lines[0].style.transform = 'none';
+            if (lines[1]) lines[1].style.opacity = '1';
+            if (lines[2]) lines[2].style.transform = 'none';
+        }
+        function openMenu() {
+            mobileNav.classList.add('open');
+            overlayMenu.classList.add('show');
+            document.body.style.overflow = 'hidden';
+            const lines = document.querySelectorAll('.burger-line');
+            if (lines[0]) lines[0].style.transform = 'rotate(45deg) translate(5px, 5px)';
+            if (lines[1]) lines[1].style.opacity = '0';
+            if (lines[2]) lines[2].style.transform = 'rotate(-45deg) translate(5px, -5px)';
+        }
+        if (burgerMenu) {
+            burgerMenu.addEventListener('click', () => {
+                if (mobileNav.classList.contains('open')) closeMenu();
+                else openMenu();
+            });
+        }
+        if (overlayMenu) overlayMenu.addEventListener('click', closeMenu);
+        document.querySelectorAll('.mobile-nav .nav-link').forEach(link => link.addEventListener('click', closeMenu));
+
         const translations = {
-            en: {
-                blogTitle: "Blog - BlockChat: News and articles about P2P technologies",
-                blogHeader: "BlockChat Blog",
-                blogSubheader: "News, technical articles and guides on using the P2P messenger",
-                filterAll: "All articles",
-                filterTechnical: "Technical",
-                filterNews: "News",
-                filterEducational: "Educational",
-                filterTutorials: "Tutorials",
-                categoryTechnical: "Technical",
-                categoryTutorials: "Tutorials",
-                categoryEducational: "Educational",
-                article1Title: "How we implemented P2P on WebRTC: technical details",
-                article1Excerpt: "Detailed analysis of BlockChat architecture and technical solutions that allow establishing direct connections between users without intermediaries.",
-                date2: 'September 15th, 2025',
-                article2Title: "Blocklink: a new product from the developers of Blockchat",
-                article2Excerpt: "Talking about the new Blocklink project.",
-                date3: 'September 12, 2025',
-                article3Title: "What is P2P and why is it secure?",
-                article3Excerpt: "Explaining the principles of peer-to-peer technologies, their advantages for privacy and why they are becoming the future of communications.",
-                date4: 'September 25, 2025',
-                article4Title: 'Blockchain: Technology Basics and Its Application in P2P Communications',
-                article4Excerpt: 'Learn how blockchain technology works, why it is secure, and how it is used in decentralized messengers.',
-                date5: 'September 28, 2025',
-                article5Title: "Federated servers (Federation): what is it used for?",
-                article5Excerpt: "Find out what federated servers are, how they work in messengers such as Matrix and Mastodon, and how they differ from the pure P2P architecture of BlockChat.",
-                date6: 'March 6, 2026',
-                article6Title: "How do P2P messengers find each other behind routers?",
-                article6Excerpt: "Understanding how P2P messengers bypass NAT and firewalls: from port forwarding to VPN networks. And introducing our solution — BlockLink.",
-                date7: 'March 6, 2026',
-                article7Title: "BlockLink: virtual networks for private communication",
-                article7Excerpt: "Meet BlockLink — a technology for creating isolated virtual networks for each chat. Direct P2P connection without router setup.",
-                readMore: "Read",
-                home: "Home",
-                download: "Download",
-                product: "Product",
-                features: "Features",
-                howitworks: "How to connect",
-                backlog: "Backlog",
-                developers: "Developers",
-                support: "Support",
-                report: "Report an error",
-                request: "Request a feature",
-                community: "Community",
-                BlogFooter: "Blog",
-                ReleaseFooter: "Releases",
-                LegalInf: "Legal information",
-                LegalPol: "Privacy policy",
-                rightsreserved: "© 2025 - 2026 BlockChat. All rights reserved. | Designed for private communication",
-                temporarilyunavailable: "Temporarily unavailable",
-                featuredevelopment: "This feature is currently under development. We are working on improving the website and will soon add this feature.",
-                okay: "Okay"
-            },
             ru: {
                 blogTitle: "Блог - BlockChat: Новости и статьи о P2P технологиях",
+                home: "Главная",
+                download: "Скачать",
                 blogHeader: "Блог BlockChat",
                 blogSubheader: "Новости, технические статьи и руководства по использованию P2P мессенджера",
                 filterAll: "Все статьи",
@@ -316,37 +296,13 @@
                 filterNews: "Новости",
                 filterEducational: "Образовательные",
                 filterTutorials: "Инструкции",
+                categoryNews: "Новости",
                 categoryTechnical: "Технические",
-                categoryTutorials: "Инструкции",
                 categoryEducational: "Образовательные",
-                article1Title: "Как мы реализовали P2P на WebRTC: технические детали",
-                article1Excerpt: "Подробный разбор архитектуры BlockChat и технических решений, которые позволяют устанавливать прямые соединения между пользователями без посредников.",
-                date2: '15 сентября 2025',
-                article2Title: "Blocklink: новый продукт разработчиков Blockchat",
-                article2Excerpt: "Рассказываем о новом проекте Blocklink.",
-                date3: '12 сентября 2025',
-                article3Title: "Что такое P2P и почему это безопасно?",
-                article3Excerpt: "Объясняем принципы peer-to-peer технологий, их преимущества для приватности и почему они становятся будущим коммуникаций.",
-                date4: '25 сентября 2025',
-                article4Title: 'Блокчейн: основы технологии и её применение в P2P коммуникациях',
-                article4Excerpt: 'Узнайте, как технология блокчейн работает, почему она безопасна и как применяется в децентрализованных мессенджерах.',
-                date5: '28 сентября 2025',
-                article5Title: "Федеративные серверы (Federation): что это и где используется?",
-                article5Excerpt: "Узнайте, что такое федеративные серверы, как они работают в таких мессенджерах, как Matrix и Mastodon, и чем они отличаются от чистой P2P архитектуры BlockChat.",
-                date6: '6 марта 2026',
-                article6Title: "Как P2P-мессенджеры находят друг друга за роутерами?",
-                article6Excerpt: "Разбираемся, как P2P-мессенджеры обходят NAT и файрволы: от проброса портов до VPN-сетей. И представляем наше решение — BlockLink.",
-                date7: '6 марта 2026',
-                article7Title: "BlockLink: виртуальные сети для приватного общения",
-                article7Excerpt: "Знакомьтесь: BlockLink — технология создания изолированных виртуальных сетей для каждого чата. Прямое P2P-соединение без настроек роутера.",
                 readMore: "Читать",
-                home: "Главная",
-                download: "Скачать",
                 product: "Продукт",
                 features: "Особенности",
                 howitworks: "Как подключиться",
-                backlog: "Бэклог",
-                developers: "Разработчики",
                 support: "Поддержка",
                 report: "Сообщить об ошибке",
                 request: "Запросить функцию",
@@ -355,130 +311,139 @@
                 ReleaseFooter: "Релизы",
                 LegalInf: "Правовая информация",
                 LegalPol: "Политика конфиденциальности",
-                rightsreserved: "© 2025 - 2026 BlockChat. Все права защищены. | Разработано для приватного общения",
+                rightsreserved: "© 2025 - 2026 BlockChat. Все права защищены.",
                 temporarilyunavailable: "Временно недоступно",
                 featuredevelopment: "Данная функция находится в разработке. Мы работаем над улучшением сайта и скоро добавим эту возможность.",
-                okay: "Понятно"
+                okay: "Понятно",
+                date3: "12 сентября 2025",
+                date4: "25 сентября 2025",
+                date5: "28 сентября 2025",
+                date6: "6 марта 2026",
+                date7: "6 марта 2026",
+                article3Title: "Что такое P2P и почему это безопасно?",
+                article3Excerpt: "Объясняем принципы peer-to-peer технологий, их преимущества для приватности и почему они становятся будущим коммуникаций.",
+                article4Title: "Блокчейн: основы технологии и её применение в P2P коммуникациях",
+                article4Excerpt: "Узнайте, как технология блокчейн работает, почему она безопасна и как применяется в децентрализованных мессенджерах.",
+                article5Title: "Федеративные серверы (Federation): что это и где используется?",
+                article5Excerpt: "Узнайте, что такое федеративные серверы, как они работают в таких мессенджерах, как Matrix и Mastodon, и чем они отличаются от чистой P2P архитектуры BlockChat.",
+                article6Title: "Как P2P-мессенджеры находят друг друга за роутерами?",
+                article6Excerpt: "Разбираемся, как P2P-мессенджеры обходят NAT и файрволы: от проброса портов до VPN-сетей. И представляем наше решение — BlockLink.",
+                article7Title: "BlockLink: виртуальные сети для приватного общения",
+                article7Excerpt: "Знакомьтесь: BlockLink — технология создания изолированных виртуальных сетей для каждого чата. Прямое P2P-соединение без настроек роутера."
+            },
+            en: {
+                blogTitle: "Blog - BlockChat: News and articles about P2P technologies",
+                home: "Home",
+                download: "Download",
+                blogHeader: "BlockChat Blog",
+                blogSubheader: "News, technical articles and guides on using the P2P messenger",
+                filterAll: "All articles",
+                filterTechnical: "Technical",
+                filterNews: "News",
+                filterEducational: "Educational",
+                filterTutorials: "Tutorials",
+                categoryNews: "News",
+                categoryTechnical: "Technical",
+                categoryEducational: "Educational",
+                readMore: "Read more",
+                product: "Product",
+                features: "Features",
+                howitworks: "How to connect",
+                support: "Support",
+                report: "Report an error",
+                request: "Request a feature",
+                community: "Community",
+                BlogFooter: "Blog",
+                ReleaseFooter: "Releases",
+                LegalInf: "Legal information",
+                LegalPol: "Privacy policy",
+                rightsreserved: "© 2025 - 2026 BlockChat. All rights reserved.",
+                temporarilyunavailable: "Temporarily unavailable",
+                featuredevelopment: "This feature is currently under development. We are working on improving the website and will soon add this feature.",
+                okay: "Okay",
+                date3: "September 12, 2025",
+                date4: "September 25, 2025",
+                date5: "September 28, 2025",
+                date6: "March 6, 2026",
+                date7: "March 6, 2026",
+                article3Title: "What is P2P and why is it secure?",
+                article3Excerpt: "Explaining the principles of peer-to-peer technologies, their advantages for privacy and why they are becoming the future of communications.",
+                article4Title: "Blockchain: Technology Basics and Its Application in P2P Communications",
+                article4Excerpt: "Learn how blockchain technology works, why it is secure, and how it is used in decentralized messengers.",
+                article5Title: "Federated servers (Federation): what is it used for?",
+                article5Excerpt: "Find out what federated servers are, how they work in messengers such as Matrix and Mastodon, and how they differ from the pure P2P architecture of BlockChat.",
+                article6Title: "How do P2P messengers find each other behind routers?",
+                article6Excerpt: "Understanding how P2P messengers bypass NAT and firewalls: from port forwarding to VPN networks. And introducing our solution — BlockLink.",
+                article7Title: "BlockLink: virtual networks for private communication",
+                article7Excerpt: "Meet BlockLink — a technology for creating isolated virtual networks for each chat. Direct P2P connection without router setup."
             }
         };
 
-        // Функция смены языка
-        function changeLanguage(lang) {
-            localStorage.setItem('lang', lang);
-            
-            document.title = getTranslation('blogTitle');
-            
+        let currentLang = localStorage.getItem('blogsLang') || 'ru';
+        function updateLanguage() {
             document.querySelectorAll('[data-lang]').forEach(el => {
                 const key = el.getAttribute('data-lang');
-                if (translations[lang] && translations[lang][key]) {
-                    el.textContent = translations[lang][key];
+                if (translations[currentLang][key]) {
+                    el.textContent = translations[currentLang][key];
                 }
             });
+            document.title = translations[currentLang].blogTitle;
+            const langBtns = document.querySelectorAll('#langToggle, #mobileLangToggle');
+            langBtns.forEach(btn => { if (btn) btn.textContent = currentLang.toUpperCase(); });
+            localStorage.setItem('blogsLang', currentLang);
         }
+        document.getElementById('langToggle')?.addEventListener('click', () => {
+            currentLang = currentLang === 'ru' ? 'en' : 'ru';
+            updateLanguage();
+        });
+        document.getElementById('mobileLangToggle')?.addEventListener('click', () => {
+            currentLang = currentLang === 'ru' ? 'en' : 'ru';
+            updateLanguage();
+        });
+        updateLanguage();
 
-        // Получение перевода по ключу
-        function getTranslation(key) {
-            const currentLang = localStorage.getItem('lang') || 'ru';
-            return translations[currentLang][key] || key;
-        }
-
-        // Инициализация темы
-        function initTheme() {
-            const savedTheme = localStorage.getItem('theme') || 'dark';
-            document.documentElement.setAttribute('data-theme', savedTheme);
-            
-            const themeToggle = document.getElementById('themeToggle');
-            if (themeToggle) {
-                themeToggle.addEventListener('click', () => {
-                    const currentTheme = document.documentElement.getAttribute('data-theme');
-                    const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
-                    
-                    document.documentElement.setAttribute('data-theme', newTheme);
-                    localStorage.setItem('theme', newTheme);
-                });
-            }
-        }
+        const filterButtons = document.querySelectorAll('.filter-btn');
+        const blogCards = document.querySelectorAll('.blog-card');
         
-        // Инициализация переключателя языка
-        function initLanguageToggle() {
-            const langToggle = document.getElementById('langToggle');
-            if (!langToggle) return;
-            
-            const savedLang = localStorage.getItem('lang') || 'ru';
-            langToggle.checked = savedLang === 'en';
-            
-            langToggle.addEventListener('change', function() {
-                const newLang = this.checked ? 'en' : 'ru';
-                changeLanguage(newLang);
-            });
-        }
-        
-        // Инициализация при загрузке страницы
-        document.addEventListener('DOMContentLoaded', function() {
-            initTheme();
-            initLanguageToggle();
-            
-            const savedLang = localStorage.getItem('lang') || 'ru';
-            changeLanguage(savedLang);
-            
-            // Фильтрация статей блога
-            const filterButtons = document.querySelectorAll('.filter-btn');
-            const blogCards = document.querySelectorAll('.blog-card');
-            
-            filterButtons.forEach(button => {
-                button.addEventListener('click', () => {
-                    filterButtons.forEach(btn => btn.classList.remove('active'));
-                    button.classList.add('active');
-                    
-                    const filter = button.getAttribute('data-filter');
-                    
-                    blogCards.forEach(card => {
-                        if (filter === 'all' || card.getAttribute('data-category') === filter || 
-                            (card.getAttribute('data-category') && card.getAttribute('data-category').includes(filter))) {
-                            card.style.display = 'flex';
-                        } else {
-                            card.style.display = 'none';
-                        }
-                    });
+        filterButtons.forEach(button => {
+            button.addEventListener('click', () => {
+                filterButtons.forEach(btn => btn.classList.remove('active'));
+                button.classList.add('active');
+                const filter = button.getAttribute('data-filter');
+                
+                blogCards.forEach(card => {
+                    const cardCategories = card.getAttribute('data-category');
+                    if (filter === 'all') {
+                        card.style.display = 'flex';
+                    } else if (cardCategories && cardCategories.includes(filter)) {
+                        card.style.display = 'flex';
+                    } else {
+                        card.style.display = 'none';
+                    }
                 });
             });
         });
 
-        // Запуск модального окна
+        const modal = document.getElementById('modal');
         function showModal() {
-            const modal = document.getElementById('modal');
             modal.classList.add('show');
             document.body.style.overflow = 'hidden';
         }
-
-        // Закрытие модального окна
-        function closeModal() {
-            const modal = document.getElementById('modal');
+        window.closeModal = () => {
             modal.classList.remove('show');
-            document.body.style.overflow = 'auto';
-        }
-
-        // Обработка кликов по ссылкам с классом disabled-link-modal
-        document.querySelectorAll('.disabled-link-modal').forEach(link => {
-            link.addEventListener('click', function (e) {
-                e.preventDefault();
-                showModal();
-            });
+            document.body.style.overflow = '';
+        };
+        modal?.addEventListener('click', (e) => { if (e.target === modal) closeModal(); });
+        document.addEventListener('keydown', (e) => { if (e.key === 'Escape' && modal.classList.contains('show')) closeModal(); });
+        document.querySelectorAll('#reportLink, #requestLink').forEach(btn => {
+            btn?.addEventListener('click', (e) => { e.preventDefault(); showModal(); });
         });
 
-        // Закрытие модального окна при клике вне его
-        document.getElementById('modal').addEventListener('click', function (e) {
-            if (e.target === this) {
-                closeModal();
-            }
-        });
-
-        // Закрытие модального окна по ESC
-        document.addEventListener('keydown', function (e) {
-            if (e.key === 'Escape') {
-                closeModal();
-            }
-        });
+        const fadeElements = document.querySelectorAll('.fade-in');
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+        }, { threshold: 0.1 });
+        fadeElements.forEach(el => observer.observe(el));
     </script>
 </body>
 </html>

@@ -2,510 +2,282 @@
 <html lang="ru" data-theme="dark">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
     <title data-lang="errorTitle">Страница не найдена (404) - BlockChat</title>
-    <link rel="shortcut icon" href="images/icon.png">
-    <link rel="stylesheet" href="css/index.css">
+    <link rel="shortcut icon" href="images/icon-white.png">
+    <meta name="description" content="Страница не найдена. Вернитесь на главную страницу BlockChat — P2P мессенджера с системой BlockChat ID.">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700;14..32,800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <link rel="stylesheet" href="css/404.css">
 </head>
 <body>
-    <div class="progress-container">
-        <div class="progress-bar" id="progressBar"></div>
-    </div>
-    
-    <div class="container">
-        <nav>
+    <div class="animated-gradient-bg"></div>
+    <canvas id="particleCanvas" class="floating-particles"></canvas>
+
+    <nav>
+        <div class="nav-container">
             <div class="logo">
-                <div class="logo-icon">
-                    <img src="images/logo-white.png" width="30px" alt="BlockChat"/>
-                </div>
-                <a href="index.html" data-lang="logoText">BlockChat</a>
+                <div class="logo-icon"><img src="images/icon-white.png" width="23px" style="filter: brightness(0) invert(1);" /></div>
+                <a href="index.html">BlockChat</a>
             </div>
             <div class="nav-links">
                 <a href="index.html" class="nav-link" data-lang="home">Главная</a>
                 <a href="blogs.html" class="nav-link" data-lang="BlogFooter">Блог</a>
                 <a href="download.html" class="nav-link" data-lang="download">Скачать</a>
-                <div class="language-switch">
-                    <label class="switch">
-                        <input type="checkbox" id="langToggle">
-                        <span class="slider">
-                            <span class="lang-text ru">RU</span>
-                            <span class="lang-text en">EN</span>
-                        </span>
-                    </label>
-                </div>
-                <button class="theme-toggle" id="themeToggle" aria-label="Переключить тему">
-                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M12 16C14.2091 16 16 14.2091 16 12C16 9.79086 14.2091 8 12 8C9.79086 8 8 9.79086 8 12C8 14.2091 9.79086 16 12 16Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                        <path d="M12 2V4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                        <path d="M12 20V22" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                        <path d="M4.93 4.93L6.34 6.34" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                        <path d="M17.66 17.66L19.07 19.07" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                        <path d="M2 12H4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                        <path d="M20 12H22" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                        <path d="M6.34 17.66L4.93 19.07" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                        <path d="M19.07 4.93L17.66 6.34" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                    </svg>
-                </button>
+                <button id="langToggle" class="lang-switch">RU</button>
             </div>
-            
-            <!-- Бургер-меню кнопка -->
-            <button class="burger-menu" id="burgerMenu" aria-label="Меню">
-                <span class="burger-line"></span>
-                <span class="burger-line"></span>
-                <span class="burger-line"></span>
-            </button>
-        </nav>
+            <div class="burger-menu" id="burgerMenu">
+                <div class="burger-line"></div>
+                <div class="burger-line"></div>
+                <div class="burger-line"></div>
+            </div>
+        </div>
+    </nav>
+
+    <div class="mobile-nav" id="mobileNav">
+        <a href="index.html" class="nav-link" data-lang="home">Главная</a>
+        <a href="blogs.html" class="nav-link" data-lang="BlogFooter">Блог</a>
+        <a href="download.html" class="nav-link" data-lang="download">Скачать</a>
+        <button id="mobileLangToggle" class="lang-switch" style="width: 100%; justify-content: center;">RU</button>
     </div>
-
-    <!-- Мобильное меню -->
-    <div class="mobile-overlay" id="mobileOverlay"></div>
-    <div class="mobile-menu" id="mobileMenu">
-        <button class="menu-close" id="menuClose" aria-label="Закрыть меню">
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path d="M18 6L6 18M6 6l12 12" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-            </svg>
-        </button>
-
-        <div class="mobile-menu-header">
-            <div class="mobile-logo">
-                <img src="images/logo.png" width="40px" alt="BlockChat"/>
-                <span>BlockChat</span>
-            </div>
-        </div>
-        
-        <div class="mobile-nav">
-            <a href="index.html" class="mobile-nav-link">
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M3 9L12 3L21 9V20H3V9Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                    <path d="M9 20V14H15V20" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                </svg>
-                <span data-lang="home">Главная</span>
-            </a>
-            <a href="blogs.html" class="mobile-nav-link">
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M4 4H20V20H4V4Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                    <path d="M8 8H16" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                    <path d="M8 12H16" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                    <path d="M8 16H13" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                </svg>
-                <span data-lang="BlogFooter">Блог</span>
-            </a>
-            <a href="download.html" class="mobile-nav-link">
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M4 16L4 20H20L20 16" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                    <path d="M12 4L12 12M12 12L15 9M12 12L9 9" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                </svg>
-                <span data-lang="download">Скачать</span>
-            </a>
-            <a href="index.html#features" class="mobile-nav-link">
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M12 2L15.09 8.26L22 9.27L17 14.14L18.18 21.02L12 17.77L5.82 21.02L7 14.14L2 9.27L8.91 8.26L12 2Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                </svg>
-                <span data-lang="features">Особенности</span>
-            </a>
-            <a href="index.html#how-it-works" class="mobile-nav-link">
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="2"/>
-                    <path d="M12 6V12L16 14" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
-                </svg>
-                <span data-lang="howitworks">Как подключиться</span>
-            </a>
-        </div>
-
-        <div class="mobile-controls">
-            <div class="control-item">
-                <span class="control-label">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-translate" viewBox="0 0 16 16">
-                        <path d="M4.545 6.714 4.11 8H3l1.862-5h1.284L8 8H6.833l-.435-1.286zm1.634-.736L5.5 3.956h-.049l-.679 2.022z"/>
-                        <path d="M0 2a2 2 0 0 1 2-2h7a2 2 0 0 1 2 2v3h3a2 2 0 0 1 2 2v7a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2v-3H2a2 2 0 0 1-2-2zm2-1a1 1 0 0 0-1 1v7a1 1 0 0 0 1 1h7a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1zm7.138 9.995q.289.451.63.846c-.748.575-1.673 1.001-2.768 1.292.178.217.451.635.555.867 1.125-.359 2.08-.844 2.886-1.494.777.665 1.739 1.165 2.93 1.472.133-.254.414-.673.629-.89-1.125-.253-2.057-.694-2.82-1.284.681-.747 1.222-1.651 1.621-2.757H14V8h-3v1.047h.765c-.318.844-.74 1.546-1.272 2.13a6 6 0 0 1-.415-.492 2 2 0 0 1-.94.31"/>
-                    </svg>
-                    <span>Язык</span>
-                </span>
-                <div class="mobile-lang-switch" id="mobileLangSwitch">
-                    <button class="mobile-lang-btn active" data-lang="ru">RU</button>
-                    <button class="mobile-lang-btn" data-lang="en">EN</button>
-                </div>
-            </div>
-            
-            <div class="control-item">
-                <span class="control-label">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-brilliance" viewBox="0 0 16 16">
-                        <path d="M8 16A8 8 0 1 1 8 0a8 8 0 0 1 0 16M1 8a7 7 0 0 0 7 7 3.5 3.5 0 1 0 0-7 3.5 3.5 0 1 1 0-7 7 7 0 0 0-7 7"/>
-                    </svg>
-                    <span>Тема</span>
-                </span>
-                <div class="mobile-theme-toggle" id="mobileThemeToggle">
-                    <button class="mobile-theme-btn active" data-theme="dark">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-moon-fill" viewBox="0 0 16 16">
-                            <path d="M6 .278a.77.77 0 0 1 .08.858 7.2 7.2 0 0 0-.878 3.46c0 4.021 3.278 7.277 7.318 7.277q.792-.001 1.533-.16a.79.79 0 0 1 .81.316.73.73 0 0 1-.031.893A8.35 8.35 0 0 1 8.344 16C3.734 16 0 12.286 0 7.71 0 4.266 2.114 1.312 5.124.06A.75.75 0 0 1 6 .278"/>
-                        </svg>
-                    </button>
-                    <button class="mobile-theme-btn" data-theme="light">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-brightness-high-fill" viewBox="0 0 16 16">
-                            <path d="M12 8a4 4 0 1 1-8 0 4 4 0 0 1 8 0M8 0a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-1 0v-2A.5.5 0 0 1 8 0m0 13a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-1 0v-2A.5.5 0 0 1 8 13m8-5a.5.5 0 0 1-.5.5h-2a.5.5 0 0 1 0-1h2a.5.5 0 0 1 .5.5M3 8a.5.5 0 0 1-.5.5h-2a.5.5 0 0 1 0-1h2A.5.5 0 0 1 3 8m10.657-5.657a.5.5 0 0 1 0 .707l-1.414 1.415a.5.5 0 1 1-.707-.708l1.414-1.414a.5.5 0 0 1 .707 0m-9.193 9.193a.5.5 0 0 1 0 .707L3.05 13.657a.5.5 0 0 1-.707-.707l1.414-1.414a.5.5 0 0 1 .707 0m9.193 2.121a.5.5 0 0 1-.707 0l-1.414-1.414a.5.5 0 0 1 .707-.707l1.414 1.414a.5.5 0 0 1 0 .707M4.464 4.465a.5.5 0 0 1-.707 0L2.343 3.05a.5.5 0 1 1 .707-.707l1.414 1.414a.5.5 0 0 1 0 .708"/>
-                        </svg>
-                    </button>
-                </div>
-            </div>
-        </div>
-    </div>
+    <div class="overlay" id="overlay"></div>
 
     <section class="error-container">
-        <div class="error-background"></div>
-        
-        <!-- Плавающие элементы -->
-        <div class="floating-element floating-1">
-            <svg width="80" height="80" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" stroke="var(--primary)" stroke-width="2"/>
-            </svg>
-        </div>
-        <div class="floating-element floating-2">
-            <svg width="80" height="80" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path d="M12 22C17.5228 22 22 17.5228 22 12C22 6.47715 17.5228 2 12 2C6.47715 2 2 6.47715 2 12C2 17.5228 6.47715 22 12 22Z" stroke="var(--secondary)" stroke-width="2"/>
-                <path d="M8 12H16M12 8V16" stroke="var(--secondary)" stroke-width="2" stroke-linecap="round"/>
-            </svg>
-        </div>
-        <div class="floating-element floating-3">
-            <svg width="80" height="80" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path d="M13 10V3L4 14H11V21L20 10H13Z" stroke="var(--accent)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-            </svg>
-        </div>
-
-        <div class="error-content">
-            <div class="error-graphic">
-                <div class="error-icon">
-                    <svg width="60" height="60" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" stroke="var(--error)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                    </svg>
+        <div class="container">
+            <div class="error-content glass-card fade-in">
+                <div class="error-graphic">
+                    <div class="error-icon">
+                        <i class="fas fa-search"></i>
+                    </div>
+                    <div class="error-number">404</div>
                 </div>
-                <div class="error-number">404</div>
-            </div>
 
-            <h1 class="error-title" data-lang="errorTitleText">Потерялись в сети?</h1>
-            <p class="error-message" data-lang="errorMessage">
-                Кажется, эта страница отключилась от нашего P2P-соединения. 
-                Возможно, она была перемещена или больше не существует.
-            </p>
+                <h1 class="error-title" data-lang="errorTitleText">Потерялись в сети?</h1>
+                <p class="error-message" data-lang="errorMessage">
+                    Кажется, эта страница отключилась от нашего P2P-соединения. 
+                    Возможно, она была перемещена или больше не существует.
+                </p>
 
-            <div class="error-actions">
-                <a onclick="history.back()" class="btn btn-primary">
-                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M15 18l-6-6 6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                    </svg>
-                    <span data-lang="goBack">Вернуться назад</span>
-                </a>
-                <a href="index.html" class="btn btn-primary" style="align-items: center;">
-                    <span data-lang="goHome">На главную</span>
-                </a>
+                <div class="error-actions">
+                    <a href="javascript:history.back()" class="btn btn-secondary">
+                        <i class="fas fa-arrow-left"></i>
+                        <span data-lang="goBack">Вернуться назад</span>
+                    </a>
+                    <a href="index.html" class="btn btn-primary">
+                        <i class="fas fa-home"></i>
+                        <span data-lang="goHome">На главную</span>
+                    </a>
+                </div>
             </div>
         </div>
     </section>
 
     <div id="modal" class="modal">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h3 data-lang="temporarilyunavailable">Временно недоступно</h3>
-                <button class="modal-close" onclick="closeModal()">
-                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M18 6L6 18M6 6l12 12" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                    </svg>
-                </button>
+        <div class="modal-glass">
+            <div class="modal-glow"></div>
+            <div class="modal-icon-wrapper">
+                <i class="fas fa-code-branch"></i>
             </div>
-            <div class="modal-body">
-                <div class="modal-icon">
-                    <svg width="48" height="48" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" stroke="var(--warning)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                    </svg>
-                </div>
-                <p data-lang="featuredevelopment">Данная функция находится в разработке. Мы работаем над улучшением сайта и скоро добавим эту возможность.</p>
-            </div>
-            <div class="modal-footer">
-                <button data-lang="okay" class="btn btn-primary" onclick="closeModal()">Понятно</button>
-            </div>
+            <h3 class="modal-title" data-lang="temporarilyunavailable">Временно недоступно</h3>
+            <p class="modal-description" data-lang="featuredevelopment">Данная функция находится в разработке. Мы работаем над улучшением сайта и скоро добавим эту возможность.</p>
+            <button class="modal-close-btn" onclick="closeModal()"><span data-lang="okay">Понятно</span></button>
         </div>
     </div>
 
     <footer>
         <div class="container">
             <div class="footer-content">
-                <div class="footer-column">
-                    <h3 data-lang="product">Продукт</h3>
-                    <ul class="footer-links">
-                        <li><a href="download.html" data-lang="download">Скачать</a></li>
-                        <li><a href="index.html#features" data-lang="features">Особенности</a></li>
-                        <li><a href="index.html#how-it-works" data-lang="howitworks">Как подключиться</a></li>
-                        <li><a href="index.html#backlog" data-lang="backlog">Бэклог</a></li>
-                    </ul>
+                <div>
+                    <h3>BlockChat</h3>
+                    <p data-lang="rightsreserved">© 2025 - 2026 BlockChat. Все права защищены.</p>
                 </div>
-                <div class="footer-column">
-                    <h3 data-lang="support">Поддержка</h3>
-                    <ul class="footer-links">
-                        <li><a href="https://github.com/bereznyak72/blockchat-releases/issues/new?template=bug_report.md" target="_blank" class="disabled-link-modal" data-lang="report">Сообщить об ошибке</a></li>
-                        <li><a href="https://github.com/bereznyak72/blockchat-releases/issues/new?template=feature_request.md" target="_blank" class="disabled-link-modal" data-lang="request">Запросить функцию</a></li>
-                    </ul>
+                <div class="footer-links">
+                    <h4 data-lang="product">Продукт</h4>
+                    <a href="download.html" data-lang="download">Скачать</a>
+                    <a href="index.html#features" data-lang="features">Особенности</a>
+                    <a href="index.html#how-it-works" data-lang="howitworks">Как подключиться</a>
                 </div>
-                <div class="footer-column">
-                    <h3 data-lang="community">Сообщество</h3>
-                    <ul class="footer-links">
-                        <li><a href="blogs.html" data-lang="BlogFooter">Блог</a></li>
-                        <li><a href="download.html#version-history" data-lang="ReleaseFooter">Релизы</a></li>
-                    </ul>
+                <div class="footer-links">
+                    <h4 data-lang="support">Поддержка</h4>
+                    <a href="#" id="reportLink" data-lang="report">Сообщить об ошибке</a>
+                    <a href="#" id="requestLink" data-lang="request">Запросить функцию</a>
                 </div>
-                <div class="footer-column">
-                    <h3 data-lang="LegalInf">Правовая информация</h3>
-                    <ul class="footer-links">
-                        <li><a href="privacy.html" data-lang="LegalPol">Политика конфиденциальности</a></li>
-                    </ul>
+                <div class="footer-links">
+                    <h4 data-lang="community">Сообщество</h4>
+                    <a href="blogs.html" data-lang="BlogFooter">Блог</a>
+                    <a href="download.html#version-history" data-lang="ReleaseFooter">Релизы</a>
                 </div>
-            </div>
-            <div class="footer-bottom">
-                <p data-lang="rightsreserved">© 2025 - 2026 BlockChat. Все права защищены. | Разработано для приватного общения</p>
+                <div class="footer-links">
+                    <h4 data-lang="LegalInf">Правовая информация</h4>
+                    <a href="privacy.html" data-lang="LegalPol">Политика конфиденциальности</a>
+                </div>
             </div>
         </div>
     </footer>
 
     <script>
-        // Переводы для страницы 404
+        const canvas = document.getElementById('particleCanvas');
+        const ctx = canvas.getContext('2d');
+        let particles = [];
+        function resizeCanvas() {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        }
+        window.addEventListener('resize', resizeCanvas);
+        resizeCanvas();
+        for (let i = 0; i < 60; i++) {
+            particles.push({
+                x: Math.random() * canvas.width,
+                y: Math.random() * canvas.height,
+                radius: Math.random() * 2 + 1,
+                alpha: Math.random() * 0.4,
+                speedX: (Math.random() - 0.5) * 0.2,
+                speedY: (Math.random() - 0.5) * 0.2
+            });
+        }
+        function animateParticles() {
+            if (!ctx) return;
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            particles.forEach(p => {
+                p.x += p.speedX;
+                p.y += p.speedY;
+                if (p.x < 0) p.x = canvas.width;
+                if (p.x > canvas.width) p.x = 0;
+                if (p.y < 0) p.y = canvas.height;
+                if (p.y > canvas.height) p.y = 0;
+                ctx.beginPath();
+                ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
+                ctx.fillStyle = `rgba(0, 102, 255, ${p.alpha * 0.5})`;
+                ctx.fill();
+            });
+            requestAnimationFrame(animateParticles);
+        }
+        animateParticles();
+
+        const burgerMenu = document.getElementById('burgerMenu');
+        const mobileNav = document.getElementById('mobileNav');
+        const overlayMenu = document.getElementById('overlay');
+        function closeMenu() {
+            mobileNav.classList.remove('open');
+            overlayMenu.classList.remove('show');
+            document.body.style.overflow = '';
+            const lines = document.querySelectorAll('.burger-line');
+            if (lines[0]) lines[0].style.transform = 'none';
+            if (lines[1]) lines[1].style.opacity = '1';
+            if (lines[2]) lines[2].style.transform = 'none';
+        }
+        function openMenu() {
+            mobileNav.classList.add('open');
+            overlayMenu.classList.add('show');
+            document.body.style.overflow = 'hidden';
+            const lines = document.querySelectorAll('.burger-line');
+            if (lines[0]) lines[0].style.transform = 'rotate(45deg) translate(5px, 5px)';
+            if (lines[1]) lines[1].style.opacity = '0';
+            if (lines[2]) lines[2].style.transform = 'rotate(-45deg) translate(5px, -5px)';
+        }
+        if (burgerMenu) {
+            burgerMenu.addEventListener('click', () => {
+                if (mobileNav.classList.contains('open')) closeMenu();
+                else openMenu();
+            });
+        }
+        if (overlayMenu) overlayMenu.addEventListener('click', closeMenu);
+        document.querySelectorAll('.mobile-nav .nav-link').forEach(link => link.addEventListener('click', closeMenu));
+
         const translations = {
-            en: {
-                errorTitle: "Page Not Found (404) - BlockChat",
-                errorTitleText: "Lost in the network?",
-                errorMessage: "It seems this page has disconnected from our P2P connection. It may have been moved or no longer exists.",
-                goBack: "Go Back",
-                goHome: "Go to Home",
-                home: "Home",
-                download: "Download",
-                product: "Product",
-                features: "Features",
-                howitworks: "How to connect",
-                backlog: "Backlog",
-                support: "Support",
-                report: "Report a bug",
-                request: "Request a feature",
-                community: "Community",
-                BlogFooter: "Blog",
-                ReleaseFooter: "Releases",
-                LegalInf: "Legal information",
-                LegalPol: "Privacy policy",
-                rightsreserved: "© 2025 - 2026 BlockChat. All rights reserved. | Designed for private communication",
-                temporarilyunavailable: "Temporarily unavailable",
-                featuredevelopment: "This feature is currently under development. We are working on improving the website and will soon add this feature.",
-                okay: "Okay",
-                logoText: "BlockChat"
-            },
             ru: {
                 errorTitle: "Страница не найдена (404) - BlockChat",
+                home: "Главная",
+                download: "Скачать",
+                BlogFooter: "Блог",
                 errorTitleText: "Потерялись в сети?",
                 errorMessage: "Кажется, эта страница отключилась от нашего P2P-соединения. Возможно, она была перемещена или больше не существует.",
                 goBack: "Вернуться назад",
                 goHome: "На главную",
-                home: "Главная",
-                download: "Скачать",
                 product: "Продукт",
                 features: "Особенности",
                 howitworks: "Как подключиться",
-                backlog: "Бэклог",
                 support: "Поддержка",
                 report: "Сообщить об ошибке",
                 request: "Запросить функцию",
                 community: "Сообщество",
-                BlogFooter: "Блог",
                 ReleaseFooter: "Релизы",
                 LegalInf: "Правовая информация",
                 LegalPol: "Политика конфиденциальности",
-                rightsreserved: "© 2025 - 2026 BlockChat. Все права защищены. | Разработано для приватного общения",
+                rightsreserved: "© 2025 - 2026 BlockChat. Все права защищены.",
                 temporarilyunavailable: "Временно недоступно",
                 featuredevelopment: "Данная функция находится в разработке. Мы работаем над улучшением сайта и скоро добавим эту возможность.",
-                okay: "Понятно",
-                logoText: "BlockChat"
+                okay: "Понятно"
+            },
+            en: {
+                errorTitle: "Page Not Found (404) - BlockChat",
+                home: "Home",
+                download: "Download",
+                BlogFooter: "Blog",
+                errorTitleText: "Lost in the network?",
+                errorMessage: "It seems this page has disconnected from our P2P connection. It may have been moved or no longer exists.",
+                goBack: "Go Back",
+                goHome: "Go to Home",
+                product: "Product",
+                features: "Features",
+                howitworks: "How to connect",
+                support: "Support",
+                report: "Report an error",
+                request: "Request a feature",
+                community: "Community",
+                ReleaseFooter: "Releases",
+                LegalInf: "Legal information",
+                LegalPol: "Privacy policy",
+                rightsreserved: "© 2025 - 2026 BlockChat. All rights reserved.",
+                temporarilyunavailable: "Temporarily unavailable",
+                featuredevelopment: "This feature is currently under development. We are working on improving the website and will soon add this feature.",
+                okay: "Okay"
             }
         };
 
-        // Функция смены языка
-        function changeLanguage(lang) {
-            localStorage.setItem('lang', lang);
-            
-            document.title = getTranslation('errorTitle');
-            
+        let currentLang = localStorage.getItem('errorLang') || 'ru';
+        function updateLanguage() {
             document.querySelectorAll('[data-lang]').forEach(el => {
                 const key = el.getAttribute('data-lang');
-                if (translations[lang] && translations[lang][key]) {
-                    el.textContent = translations[lang][key];
+                if (translations[currentLang][key]) {
+                    el.textContent = translations[currentLang][key];
                 }
             });
-
-            document.querySelectorAll('.mobile-lang-btn').forEach(btn => {
-                btn.classList.toggle('active', btn.dataset.lang === lang);
-            });
-
-            const langToggle = document.getElementById('langToggle');
-            if (langToggle) {
-                langToggle.checked = lang === 'en';
-            }
+            document.title = translations[currentLang].errorTitle;
+            const langBtns = document.querySelectorAll('#langToggle, #mobileLangToggle');
+            langBtns.forEach(btn => { if (btn) btn.textContent = currentLang.toUpperCase(); });
+            localStorage.setItem('errorLang', currentLang);
         }
+        document.getElementById('langToggle')?.addEventListener('click', () => {
+            currentLang = currentLang === 'ru' ? 'en' : 'ru';
+            updateLanguage();
+        });
+        document.getElementById('mobileLangToggle')?.addEventListener('click', () => {
+            currentLang = currentLang === 'ru' ? 'en' : 'ru';
+            updateLanguage();
+        });
+        updateLanguage();
 
-        // Получение перевода по ключу
-        function getTranslation(key) {
-            const currentLang = localStorage.getItem('lang') || 'ru';
-            return translations[currentLang][key] || key;
-        }
-
-        // Инициализация темы
-        function initTheme() {
-            const savedTheme = localStorage.getItem('theme') || 'dark';
-            document.documentElement.setAttribute('data-theme', savedTheme);
-            
-            document.querySelectorAll('.mobile-theme-btn').forEach(btn => {
-                btn.classList.toggle('active', btn.dataset.theme === savedTheme);
-            });
-            
-            const themeToggle = document.getElementById('themeToggle');
-            if (themeToggle) {
-                themeToggle.addEventListener('click', () => {
-                    const currentTheme = document.documentElement.getAttribute('data-theme');
-                    const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
-                    
-                    document.documentElement.setAttribute('data-theme', newTheme);
-                    localStorage.setItem('theme', newTheme);
-                    
-                    document.querySelectorAll('.mobile-theme-btn').forEach(btn => {
-                        btn.classList.toggle('active', btn.dataset.theme === newTheme);
-                    });
-                });
-            }
-        }
-        
-        // Инициализация переключателя языка
-        function initLanguageToggle() {
-            const langToggle = document.getElementById('langToggle');
-            if (langToggle) {
-                const savedLang = localStorage.getItem('lang') || 'ru';
-                langToggle.checked = savedLang === 'en';
-                
-                langToggle.addEventListener('change', function() {
-                    const newLang = this.checked ? 'en' : 'ru';
-                    changeLanguage(newLang);
-                });
-            }
-        }
-
-        function initMobileControls() {
-            document.querySelectorAll('.mobile-lang-btn').forEach(btn => {
-                btn.addEventListener('click', function() {
-                    const lang = this.dataset.lang;
-                    changeLanguage(lang);
-                });
-            });
-
-            document.querySelectorAll('.mobile-theme-btn').forEach(btn => {
-                btn.addEventListener('click', function() {
-                    const theme = this.dataset.theme;
-                    document.documentElement.setAttribute('data-theme', theme);
-                    localStorage.setItem('theme', theme);
-                    
-                    document.querySelectorAll('.mobile-theme-btn').forEach(b => {
-                        b.classList.toggle('active', b.dataset.theme === theme);
-                    });
-                });
-            });
-        }
-
-        function initBurgerMenu() {
-            const burger = document.getElementById('burgerMenu');
-            const menu = document.getElementById('mobileMenu');
-            const overlay = document.getElementById('mobileOverlay');
-            const closeBtn = document.getElementById('menuClose');
-            
-            if (!burger || !menu || !overlay || !closeBtn) return;
-            
-            function openMenu() {
-                burger.classList.add('hidden');
-                menu.classList.add('active');
-                overlay.classList.add('active');
-                document.body.style.overflow = 'hidden';
-            }
-            
-            function closeMenu() {
-                burger.classList.remove('hidden');
-                menu.classList.remove('active');
-                overlay.classList.remove('active');
-                document.body.style.overflow = 'auto';
-            }
-            
-            burger.addEventListener('click', openMenu);
-            closeBtn.addEventListener('click', closeMenu);
-            overlay.addEventListener('click', closeMenu);
-            
-            document.querySelectorAll('.mobile-nav-link').forEach(link => {
-                link.addEventListener('click', closeMenu);
-            });
-            
-            document.addEventListener('keydown', (e) => {
-                if (e.key === 'Escape' && menu.classList.contains('active')) {
-                    closeMenu();
-                }
-            });
-        }
-
-        function initProgressBar() {
-            window.addEventListener('scroll', () => {
-                const winScroll = document.body.scrollTop || document.documentElement.scrollTop;
-                const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
-                const scrolled = (winScroll / height) * 100;
-                const progressBar = document.getElementById('progressBar');
-                if (progressBar) {
-                    progressBar.style.width = scrolled + '%';
-                }
-            });
-        }
-
-        // Запуск модального окна
+        const modal = document.getElementById('modal');
         function showModal() {
-            const modal = document.getElementById('modal');
             modal.classList.add('show');
             document.body.style.overflow = 'hidden';
         }
-
-        // Закрытие модального окна
-        function closeModal() {
-            const modal = document.getElementById('modal');
+        window.closeModal = () => {
             modal.classList.remove('show');
-            document.body.style.overflow = 'auto';
-        }
-
-        document.addEventListener('DOMContentLoaded', function() {
-            initTheme();
-            initLanguageToggle();
-            initMobileControls();
-            initBurgerMenu();
-            initProgressBar();
-            
-            const savedLang = localStorage.getItem('lang') || 'ru';
-            changeLanguage(savedLang);
-
-            document.querySelectorAll('.disabled-link-modal').forEach(link => {
-                link.addEventListener('click', function (e) {
-                    e.preventDefault();
-                    showModal();
-                });
-            });
-
-            document.getElementById('modal').addEventListener('click', function (e) {
-                if (e.target === this) {
-                    closeModal();
-                }
-            });
-
-            document.addEventListener('keydown', function (e) {
-                if (e.key === 'Escape') {
-                    closeModal();
-                }
-            });
+            document.body.style.overflow = '';
+        };
+        modal?.addEventListener('click', (e) => { if (e.target === modal) closeModal(); });
+        document.addEventListener('keydown', (e) => { if (e.key === 'Escape' && modal.classList.contains('show')) closeModal(); });
+        document.querySelectorAll('#reportLink, #requestLink').forEach(btn => {
+            btn?.addEventListener('click', (e) => { e.preventDefault(); showModal(); });
         });
 
-        window.showModal = showModal;
-        window.closeModal = closeModal;
+        const fadeElements = document.querySelectorAll('.fade-in');
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+        }, { threshold: 0.1 });
+        fadeElements.forEach(el => observer.observe(el));
     </script>
 </body>
 </html>
