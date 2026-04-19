@@ -500,19 +500,20 @@
             }
         };
 
-        let currentLang = localStorage.getItem('privacyLang') || 'ru';
+        let currentLang = localStorage.getItem('blockchatLang') || 'ru';
         function updateLanguage() {
             document.querySelectorAll('[data-lang]').forEach(el => {
                 const key = el.getAttribute('data-lang');
-                if (translations[currentLang][key]) {
+                if (translations[currentLang] && translations[currentLang][key]) {
                     el.textContent = translations[currentLang][key];
                 }
             });
             document.title = translations[currentLang].privacyTitle;
             const langBtns = document.querySelectorAll('#langToggle, #mobileLangToggle');
             langBtns.forEach(btn => { if (btn) btn.textContent = currentLang.toUpperCase(); });
-            localStorage.setItem('privacyLang', currentLang);
+            localStorage.setItem('blockchatLang', currentLang);
         }
+
         document.getElementById('langToggle')?.addEventListener('click', () => {
             currentLang = currentLang === 'ru' ? 'en' : 'ru';
             updateLanguage();

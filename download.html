@@ -409,11 +409,11 @@
         }
       };
 
-      let currentLang = localStorage.getItem('downloadLang') || 'ru';
+      let currentLang = localStorage.getItem('blockchatLang') || 'ru';
       function updateLanguage() {
         document.querySelectorAll('[data-lang]').forEach(el => {
           const key = el.getAttribute('data-lang');
-          if (translations[currentLang][key]) {
+          if (translations[currentLang] && translations[currentLang][key]) {
             if (el.tagName === 'INPUT' || el.tagName === 'TEXTAREA') el.placeholder = translations[currentLang][key];
             else el.textContent = translations[currentLang][key];
           }
@@ -421,8 +421,9 @@
         document.title = translations[currentLang].downloadTitle;
         const langBtns = document.querySelectorAll('#langToggle, #mobileLangToggle');
         langBtns.forEach(btn => { if (btn) btn.textContent = currentLang.toUpperCase(); });
-        localStorage.setItem('downloadLang', currentLang);
+        localStorage.setItem('blockchatLang', currentLang);
       }
+
       document.getElementById('langToggle')?.addEventListener('click', () => {
         currentLang = currentLang === 'ru' ? 'en' : 'ru';
         updateLanguage();

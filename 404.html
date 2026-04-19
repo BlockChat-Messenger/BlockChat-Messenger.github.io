@@ -235,7 +235,7 @@
             }
         };
 
-        let currentLang = localStorage.getItem('errorLang') || 'ru';
+        let currentLang = localStorage.getItem('blockchatLang') || 'ru';
         function updateLanguage() {
             document.querySelectorAll('[data-lang]').forEach(el => {
                 const key = el.getAttribute('data-lang');
@@ -246,7 +246,7 @@
             document.title = translations[currentLang].errorTitle;
             const langBtns = document.querySelectorAll('#langToggle, #mobileLangToggle');
             langBtns.forEach(btn => { if (btn) btn.textContent = currentLang.toUpperCase(); });
-            localStorage.setItem('errorLang', currentLang);
+            localStorage.setItem('blockchatLang', currentLang);
         }
         document.getElementById('langToggle')?.addEventListener('click', () => {
             currentLang = currentLang === 'ru' ? 'en' : 'ru';

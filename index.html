@@ -398,17 +398,19 @@
         process: "A simple process for installing a secure connection via BlockChat ID"
       }
     };
-    let currentLang = 'ru';
+    let currentLang = localStorage.getItem('blockchatLang') || 'ru';
 
     function updateLanguage() {
       document.querySelectorAll('[data-lang]').forEach(el => {
         const key = el.getAttribute('data-lang');
-        if (translations[currentLang][key]) el.textContent = translations[currentLang][key];
+        if (translations[currentLang] && translations[currentLang][key]) {
+          el.textContent = translations[currentLang][key];
+        }
       });
       const chatInput = document.getElementById('chatInput');
-      if (chatInput) chatInput.placeholder = translations[currentLang].enter;
+      if (chatInput) chatInput.placeholder = translations[currentLang]?.enter || 'Введите сообщение...';
       const msgs = document.querySelectorAll('.message span');
-      if (msgs.length >= 3) {
+      if (msgs.length >= 3 && translations[currentLang]) {
         msgs[0].textContent = translations[currentLang].message1;
         msgs[1].textContent = translations[currentLang].message2;
         msgs[2].textContent = translations[currentLang].message3;
@@ -417,7 +419,9 @@
       langBtns.forEach(btn => {
         if (btn) btn.textContent = currentLang.toUpperCase();
       });
+      localStorage.setItem('blockchatLang', currentLang);
     }
+
     document.getElementById('langToggle')?.addEventListener('click', () => {
       currentLang = currentLang === 'ru' ? 'en' : 'ru';
       updateLanguage();
